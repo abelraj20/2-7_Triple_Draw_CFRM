@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2-7 Triple Draw - Final Round Sim</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="left-panel">
+  <div class="lp-section solver-display solver-display-expanded">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container" id="overall-freq-bar">
+      <div class="freq-bar-segment color-check" style="width:100%;">
+        <span class="freq-label">No data</span>
+        <span class="freq-pct">-</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-section strategy-tables strategy-tables-expanded">
+    <div class="tables-container" id="bucket-tables">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead>
+            <tr>
+              <th class="col-strategy">Strategy</th>
+              <th class="col-rate">P(x)</th>
+              <th class="col-ev-btn">BTN EV</th>
+              <th class="col-ev-bb">BB EV</th>
+            </tr>
+          </thead>
+          <tbody id="bucket-col-1"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-section settings-compact settings-row-shell">
+    <div class="settings-inline-wrap">
+      <div class="setting-row">
+        <label>Mode:</label>
+        <select id="sel-mode">
+          <option value="1draw">1-Draw Limit</option>
+          <option value="2draw">2-Draw Limit</option>
+          <option value="1draw_bb">1-Draw BB Reraise</option>
+          <option value="cardrem">Card Removal</option>
+          <option value="nl">No Limit</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label id="sel-pot-label">Pot:</label>
+        <select id="sel-pot">
+          <option value="3">$3</option>
+          <option value="5" selected>$5</option>
+          <option value="7">$7</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label>Play as:</label>
+        <select id="sel-pos">
+          <option value="BB">Big Blind</option>
+          <option value="BTN">Button</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <input type="checkbox" id="chk-show-opp">
+        <label for="chk-show-opp">Show opp</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-section history-compact history-expanded">
+    <div class="freq-title history-title">Hand History</div>
+    <div id="action-log" class="action-log-box">
+      <div class="log-entry log-system">Welcome! Select a mode and click "New Hand".</div>
+    </div>
+  </div>
+</div>
+
+<div id="right-panel">
+  <div id="top-bar" class="top-bar-minimal">
+    <button id="new-hand-btn" onclick="startNewHand()">New Hand</button>
+  </div>
+
+  <div id="table-area">
+    <div id="poker-table">
+      <div class="player-area" id="opp-area">
+        <div class="player-info">
+          <div class="dealer-btn" id="opp-dealer" style="display:none;">D</div>
+          <div class="player-name" id="opp-name">Opponent</div>
+          <div class="player-stack" id="opp-stack"></div>
+        </div>
+        <div class="player-bet" id="opp-bet"></div>
+        <div class="cards-row" id="opp-cards"></div>
+      </div>
+
+      <div id="pot-display">
+        <div class="pot-label">Pot</div>
+        <div class="pot-amount" id="pot-amt">$0</div>
+      </div>
+
+      <div id="draw-info" style="display:none;"></div>
+      <div id="deck-info" style="display:none;"></div>
+      <div id="disc-info" style="display:none;"></div>
+
+      <div class="player-area" id="player-area-box">
+        <div class="cards-row" id="player-cards"></div>
+        <div class="player-bet" id="player-bet"></div>
+        <div class="player-info">
+          <div class="dealer-btn" id="player-dealer" style="display:none;">D</div>
+          <div class="player-name" id="player-name">You</div>
+          <div class="player-stack" id="player-stack"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="action-bar" class="action-bar-taller">
+    <button class="action-btn btn-fold" id="btn-fold" onclick="doAction('fold')" disabled>Fold</button>
+    <button class="action-btn btn-check" id="btn-check" onclick="doAction('check')" disabled>Check</button>
+    <button class="action-btn btn-call" id="btn-call" onclick="doAction('call')" disabled>Call<span class="btn-detail" id="call-amt"></span></button>
+    <button class="action-btn btn-bet" id="btn-bet" onclick="doAction('bet')" disabled>Bet<span class="btn-detail" id="bet-amt"></span></button>
+    <button class="action-btn btn-raise" id="btn-raise" onclick="doAction('raise')" disabled>Raise<span class="btn-detail" id="raise-amt"></span></button>
+
+    <button class="action-btn btn-bet"   id="btn-b40"  onclick="doAction('b40')"  disabled style="display:none;">Bet 40%<span class="btn-detail" id="b40-amt"></span></button>
+    <button class="action-btn btn-bet"   id="btn-b80"  onclick="doAction('b80')"  disabled style="display:none;">Bet 80%<span class="btn-detail" id="b80-amt"></span></button>
+    <button class="action-btn btn-bet"   id="btn-b120" onclick="doAction('b120')" disabled style="display:none;">Bet 120%<span class="btn-detail" id="b120-amt"></span></button>
+    <button class="action-btn btn-raise" id="btn-ba"   onclick="doAction('ba')"   disabled style="display:none;">Bet All-in<span class="btn-detail" id="ba-amt"></span></button>
+
+    <button class="action-btn btn-raise" id="btn-r86"  onclick="doAction('r86')"  disabled style="display:none;">Raise 86%<span class="btn-detail" id="r86-amt"></span></button>
+    <button class="action-btn btn-raise" id="btn-r111" onclick="doAction('r111')" disabled style="display:none;">Raise 111%<span class="btn-detail" id="r111-amt"></span></button>
+    <button class="action-btn btn-raise" id="btn-ra"   onclick="doAction('ra')"   disabled style="display:none;">Raise All-in<span class="btn-detail" id="ra-amt"></span></button>
+  </div>
+</div>
+
+<script src="js/seeds.js"></script>
+<script src="js/solver_data.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
