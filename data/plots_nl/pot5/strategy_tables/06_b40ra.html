@@ -1,0 +1,235 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>nl pot5 b40ra</title><style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 14px;
+}
+a { color: inherit; text-decoration: none; }
+.page-wrap {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.page-head {
+  padding: 10px 12px;
+  background: #0f3460;
+  border-bottom: 1px solid #0f3460;
+}
+.page-head h1 {
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #e94560;
+  margin: 0;
+}
+.page-sub {
+  padding: 8px 12px;
+  border-bottom: 1px solid #0f3460;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+}
+.page-sub .muted { color: #aaa; }
+.nav-row {
+  padding: 8px 12px;
+  border-bottom: 1px solid #0f3460;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.nav-btn {
+  background: #0d1b2a;
+  color: #e0e0e0;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.nav-btn:hover { border-color: #e94560; color: #fff; }
+.lp-section { padding: 8px 12px; border-bottom: 1px solid #0f3460; }
+.freq-title {
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.freq-bar-container {
+  display: flex;
+  width: 100%;
+  height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #444;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.freq-bar-segment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-right: 1px solid rgba(0,0,0,0.3);
+  min-width: 0;
+  gap: 2px;
+}
+.freq-bar-segment:last-child { border-right: none; }
+.freq-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(0, 0, 0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+.freq-pct {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(0, 0, 0);
+}
+.color-fold { background: #87CEEB; }
+.color-check { background: #74dd70; }
+.color-call { background: #74dd70; }
+.color-bet { background: #DC143C; }
+.color-raise { background: #DC143C; }
+.color-b40 { background: #FFB6C1; }
+.color-b80 { background: #FF6B6B; }
+.color-b120 { background: #DC143C; }
+.color-ba { background: #8B0000; }
+.color-r86 { background: #FF6B6B; }
+.color-r111 { background: #DC143C; }
+.color-ra { background: #8B0000; }
+
+.table-wrap {
+  padding: 8px 12px 12px 12px;
+  overflow-x: auto;
+}
+.strategy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  table-layout: fixed;
+}
+.strategy-table th {
+  background: #0f3460;
+  text-transform: uppercase;
+  font-size: 8px;
+  letter-spacing: 0.2px;
+  color: #aaa;
+  padding: 5px 3px;
+  border-bottom: 2px solid #e94560;
+  text-align: center;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.strategy-table td {
+  padding: 2px 3px;
+  border-bottom: 1px solid #0f3460;
+  vertical-align: middle;
+  height: 24px;
+  overflow: hidden;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.strategy-table tr:hover td { background: rgba(79, 195, 247, 0.05); }
+
+.strategy-table th.col-strategy,
+.strategy-table td.col-strategy { width: 52%; }
+.strategy-table th.col-rate,
+.strategy-table td.col-rate { width: 16%; }
+.strategy-table th.col-ev-btn,
+.strategy-table td.col-ev-btn { width: 16%; }
+.strategy-table th.col-ev-bb,
+.strategy-table td.col-ev-bb { width: 16%; }
+
+.bucket-strategy-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+}
+.bucket-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(15, 52, 96, 0.65);
+  border: 1px solid rgba(233, 69, 96, 0.25);
+  color: #4fc3f7;
+  font-weight: 800;
+  letter-spacing: 0.1px;
+  font-size: 10px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.strategy-bar {
+  display: flex;
+  height: 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.1);
+  width: 190px;
+  flex: 0 0 190px;
+}
+.bar-segment { height: 100%; }
+
+.ev-positive { color: #4caf50; font-weight: 800; }
+.ev-negative { color: #e94560; font-weight: 800; }
+.ev-zero { color: #888; }
+
+.seq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px;
+  padding: 12px;
+}
+.seq-card {
+  display: block;
+  background: #0d1b2a;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  padding: 10px;
+}
+.seq-card:hover { border-color: #e94560; }
+.seq-card .seq-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 4px;
+}
+.seq-card .seq-meta {
+  font-size: 10px;
+  color: #aaa;
+}
+.empty-note {
+  padding: 12px;
+  color: #aaa;
+  font-size: 11px;
+}
+@media (max-width: 900px) {
+  body { padding: 8px; }
+  .page-wrap { max-width: 100%; }
+  .strategy-bar { width: 160px; flex-basis: 160px; }
+}
+</style></head><body><div class="page-wrap"><div class="page-head"><h1>NL Strategy Table — Pot 5</h1></div><div class="page-sub"><div><span class="muted">Sequence:</span> b40ra &nbsp; <span class="muted">Parsed:</span> Bet 40 - Raise All-in</div><div><span class="muted">Actor:</span> BB</div></div><div class="nav-row"><a class="nav-btn" href="05_b40r86ra.html">Prev</a><a class="nav-btn" href="index.html">All tables</a><a class="nav-btn" href="07_b80.html">Next</a><a class="nav-btn" href="../index.html">Pot index</a></div><div class="lp-section"><div class="freq-title">Overall Frequency</div><div class="freq-bar-container"><div class="freq-bar-segment color-call" style="width:50.000000%;"><div class="freq-label">Call</div><div class="freq-pct">24.6%</div></div><div class="freq-bar-segment color-fold" style="width:50.000000%;"><div class="freq-label">Fold</div><div class="freq-pct">75.4%</div></div></div></div><div class="lp-section"><div class="freq-title">Actions</div><div class="muted" style="font-size:11px;">Call, Fold</div></div><div class="table-wrap"><table class="strategy-table"><thead><tr><th class="col-strategy">Strategy</th><th class="col-rate">Rate</th><th class="col-ev-btn">BTN EV</th><th class="col-ev-bb">BB EV</th></tr></thead><tbody><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">75</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:100.000000%;" title="Call: 100.0%"></div></div></div></td><td class="col-rate">0.1%</td><td class="col-ev-btn ev-positive">0.035</td><td class="col-ev-bb ev-positive">31.965</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">76</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:99.000000%;" title="Call: 99.0%"></div><div class="bar-segment color-fold" style="width:1.000000%;" title="Fold: 1.0%"></div></div></div></td><td class="col-rate">0.2%</td><td class="col-ev-btn ev-positive">1.243</td><td class="col-ev-bb ev-positive">30.757</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">85</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:100.000000%;" title="Call: 100.0%"></div></div></div></td><td class="col-rate">1.2%</td><td class="col-ev-btn ev-positive">2.453</td><td class="col-ev-bb ev-positive">29.547</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">86</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:99.000000%;" title="Call: 99.0%"></div><div class="bar-segment color-fold" style="width:1.000000%;" title="Fold: 1.0%"></div></div></div></td><td class="col-rate">3.0%</td><td class="col-ev-btn ev-positive">4.653</td><td class="col-ev-bb ev-positive">27.347</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">87</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:96.000000%;" title="Call: 96.0%"></div><div class="bar-segment color-fold" style="width:4.000000%;" title="Fold: 4.0%"></div></div></div></td><td class="col-rate">9.0%</td><td class="col-ev-btn ev-positive">6.902</td><td class="col-ev-bb ev-positive">25.098</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">95</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:92.000000%;" title="Call: 92.0%"></div><div class="bar-segment color-fold" style="width:8.000000%;" title="Fold: 8.0%"></div></div></div></td><td class="col-rate">0.4%</td><td class="col-ev-btn ev-positive">10.100</td><td class="col-ev-bb ev-positive">21.900</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">96</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:95.000000%;" title="Call: 95.0%"></div><div class="bar-segment color-fold" style="width:5.000000%;" title="Fold: 5.0%"></div></div></div></td><td class="col-rate">2.2%</td><td class="col-ev-btn ev-positive">11.110</td><td class="col-ev-bb ev-positive">20.890</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">97</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:66.000000%;" title="Call: 66.0%"></div><div class="bar-segment color-fold" style="width:34.000000%;" title="Fold: 34.0%"></div></div></div></td><td class="col-rate">4.4%</td><td class="col-ev-btn ev-positive">18.868</td><td class="col-ev-bb ev-positive">13.132</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">98</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:7.000000%;" title="Call: 7.0%"></div><div class="bar-segment color-fold" style="width:93.000000%;" title="Fold: 93.0%"></div></div></div></td><td class="col-rate">9.3%</td><td class="col-ev-btn ev-positive">30.980</td><td class="col-ev-bb ev-positive">1.020</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T5</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:79.000000%;" title="Call: 79.0%"></div><div class="bar-segment color-fold" style="width:21.000000%;" title="Fold: 21.0%"></div></div></div></td><td class="col-rate">4.3%</td><td class="col-ev-btn ev-positive">23.574</td><td class="col-ev-bb ev-positive">8.426</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T6</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:61.000000%;" title="Call: 61.0%"></div><div class="bar-segment color-fold" style="width:39.000000%;" title="Fold: 39.0%"></div></div></div></td><td class="col-rate">2.8%</td><td class="col-ev-btn ev-positive">23.883</td><td class="col-ev-bb ev-positive">8.117</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T7</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:9.000000%;" title="Call: 9.0%"></div><div class="bar-segment color-fold" style="width:91.000000%;" title="Fold: 91.0%"></div></div></div></td><td class="col-rate">2.1%</td><td class="col-ev-btn ev-positive">31.162</td><td class="col-ev-bb ev-positive">0.838</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T8</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:2.000000%;" title="Call: 2.0%"></div><div class="bar-segment color-fold" style="width:98.000000%;" title="Fold: 98.0%"></div></div></div></td><td class="col-rate">2.4%</td><td class="col-ev-btn ev-positive">31.847</td><td class="col-ev-bb ev-positive">0.153</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T9</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:2.000000%;" title="Call: 2.0%"></div><div class="bar-segment color-fold" style="width:98.000000%;" title="Fold: 98.0%"></div></div></div></td><td class="col-rate">2.1%</td><td class="col-ev-btn ev-positive">31.906</td><td class="col-ev-bb ev-positive">0.094</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">J8</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:1.000000%;" title="Call: 1.0%"></div><div class="bar-segment color-fold" style="width:99.000000%;" title="Fold: 99.0%"></div></div></div></td><td class="col-rate">3.3%</td><td class="col-ev-btn ev-positive">31.981</td><td class="col-ev-bb ev-positive">0.019</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">J9</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:1.000000%;" title="Call: 1.0%"></div><div class="bar-segment color-fold" style="width:99.000000%;" title="Fold: 99.0%"></div></div></div></td><td class="col-rate">2.9%</td><td class="col-ev-btn ev-positive">32.006</td><td class="col-ev-bb ev-negative">-0.006</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">Q</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:1.000000%;" title="Call: 1.0%"></div><div class="bar-segment color-fold" style="width:99.000000%;" title="Fold: 99.0%"></div></div></div></td><td class="col-rate">3.8%</td><td class="col-ev-btn ev-positive">32.032</td><td class="col-ev-bb ev-negative">-0.032</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">K</span><div class="strategy-bar"><div class="bar-segment color-call" style="width:1.000000%;" title="Call: 1.0%"></div><div class="bar-segment color-fold" style="width:99.000000%;" title="Fold: 99.0%"></div></div></div></td><td class="col-rate">5.8%</td><td class="col-ev-btn ev-positive">32.095</td><td class="col-ev-bb ev-negative">-0.095</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">A</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">10.4%</td><td class="col-ev-btn ev-positive">32.056</td><td class="col-ev-bb ev-negative">-0.056</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">22</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">3.6%</td><td class="col-ev-btn ev-positive">32.013</td><td class="col-ev-bb ev-negative">-0.013</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">33</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">2.9%</td><td class="col-ev-btn ev-positive">32.021</td><td class="col-ev-bb ev-negative">-0.021</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">44</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">2.8%</td><td class="col-ev-btn ev-positive">32.022</td><td class="col-ev-bb ev-negative">-0.022</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">55</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">3.6%</td><td class="col-ev-btn ev-positive">32.017</td><td class="col-ev-bb ev-negative">-0.017</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">66</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">4.1%</td><td class="col-ev-btn ev-positive">32.010</td><td class="col-ev-bb ev-negative">-0.010</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">77</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">3.3%</td><td class="col-ev-btn ev-positive">32.010</td><td class="col-ev-bb ev-negative">-0.010</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">88</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">3.8%</td><td class="col-ev-btn ev-positive">32.013</td><td class="col-ev-bb ev-negative">-0.013</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">99</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">2.5%</td><td class="col-ev-btn ev-positive">32.009</td><td class="col-ev-bb ev-negative">-0.009</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">TT</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">0.9%</td><td class="col-ev-btn ev-positive">32.007</td><td class="col-ev-bb ev-negative">-0.007</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">JJ</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">0.1%</td><td class="col-ev-btn ev-positive">32.005</td><td class="col-ev-bb ev-negative">-0.005</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">QQ</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">0.1%</td><td class="col-ev-btn ev-positive">32.005</td><td class="col-ev-bb ev-negative">-0.005</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">KK</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">0.1%</td><td class="col-ev-btn ev-positive">32.006</td><td class="col-ev-bb ev-negative">-0.006</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">AA</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">0.1%</td><td class="col-ev-btn ev-positive">32.005</td><td class="col-ev-bb ev-negative">-0.005</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">2-Pair</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">0.4%</td><td class="col-ev-btn ev-positive">32.003</td><td class="col-ev-bb ev-negative">-0.003</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">Str.</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">1.0%</td><td class="col-ev-btn ev-positive">32.000</td><td class="col-ev-bb ev-negative">-0.000</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">Trips</span><div class="strategy-bar"><div class="bar-segment color-fold" style="width:100.000000%;" title="Fold: 100.0%"></div></div></div></td><td class="col-rate">0.9%</td><td class="col-ev-btn ev-positive">32.001</td><td class="col-ev-bb ev-negative">-0.001</td></tr></tbody></table></div></div></body></html>

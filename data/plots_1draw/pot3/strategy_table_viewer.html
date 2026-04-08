@@ -1,0 +1,480 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>strategy_table 1draw pot3</title><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#1a1a2e;color:#e0e0e0;padding:18px}
+h2{padding:10px 12px;background:#0f3460;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:#e94560;margin:0 0 12px;border-radius:8px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tab{padding:8px 12px;cursor:pointer;border:1px solid #0f3460;border-radius:6px;background:#16213e;font-size:12px;color:#aaa;user-select:none}
+.tab.on{background:#0f3460;color:#fff;border-color:#e94560;box-shadow:0 1px 6px rgba(0,0,0,.25)}
+.panel{display:none;background:#16213e;border:2px solid #0f3460;border-radius:8px;overflow:hidden}
+.panel.on{display:block}
+.panel-header{padding:8px 12px;border-bottom:1px solid #0f3460;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.panel-header .left{font-size:11px;color:#4fc3f7;font-weight:700}
+.panel-header .right{font-size:10px;color:#888}
+.lp-section{padding:8px 12px;border-bottom:1px solid #0f3460}
+.lp-section:last-child{border-bottom:none}
+.freq-title{font-size:10px;font-weight:bold;margin-bottom:6px;color:#aaa;text-transform:uppercase;letter-spacing:.4px}
+.freq-bar-container{display:flex;width:100%;height:52px;border-radius:6px;overflow:hidden;border:1px solid #444;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.freq-bar-segment{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 8px;border-right:1px solid rgba(0,0,0,.3);min-width:0;transition:opacity .2s;cursor:default;gap:2px}
+.freq-bar-segment:hover{opacity:.85}
+.freq-bar-segment:last-child{border-right:none}
+.freq-label{font-size:10px;font-weight:600;color:#fff;text-shadow:0 1px 0 #000;white-space:nowrap;overflow:hidden;text-transform:uppercase;letter-spacing:.2px}
+.freq-pct{font-size:16px;font-weight:600;color:#fff;text-shadow:0 1px 0 #000}
+.color-fold{background:#87CEEB}
+.color-check{background:#74dd70}
+.color-call{background:#74dd70}
+.color-bet{background:#DC143C}
+.color-raise{background:#DC143C}
+.color-b40{background:#FFB6C1}
+.color-b80{background:#FF6B6B}
+.color-b120{background:#DC143C}
+.color-ba{background:#8B0000}
+.color-r86{background:#FF6B6B}
+.color-r111{background:#DC143C}
+.color-ra{background:#8B0000}
+.tables-container{display:flex;justify-content:space-between;gap:8px;flex:1;overflow:hidden}
+.table-column{flex:1;min-width:0;display:flex;flex-direction:column;overflow-y:auto;max-height:72vh}
+.table-column::-webkit-scrollbar{width:4px}
+.table-column::-webkit-scrollbar-track{background:rgba(0,0,0,.2)}
+.table-column::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px}
+.table-column::-webkit-scrollbar-thumb:hover{background:#e94560}
+.strategy-table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed}
+.strategy-table th{background:#0f3460;text-transform:uppercase;font-size:8px;letter-spacing:.2px;color:#aaa;padding:5px 3px;border-bottom:2px solid #e94560;text-align:center;font-weight:600;position:sticky;top:0;z-index:1}
+.strategy-table td{padding:2px 3px;border-bottom:1px solid #0f3460;vertical-align:middle;height:24px;overflow:hidden;text-align:center;font-variant-numeric:tabular-nums}
+.strategy-table tr:hover td{background:rgba(79,195,247,.05)}
+.strategy-table tr.active-bucket td{background:transparent}
+.strategy-table th.col-strategy,.strategy-table td.col-strategy{width:52%}
+.strategy-table th.col-rate,.strategy-table td.col-rate{width:16%}
+.strategy-table th.col-ev-btn,.strategy-table td.col-ev-btn{width:16%}
+.strategy-table th.col-ev-bb,.strategy-table td.col-ev-bb{width:16%}
+.bucket-strategy-cell{display:flex;align-items:center;justify-content:center;gap:5px;width:100%}
+.bucket-tag{display:inline-flex;align-items:center;justify-content:center;min-width:42px;padding:2px 4px;border-radius:4px;background:rgba(15,52,96,.65);border:1px solid rgba(233,69,96,.25);color:#4fc3f7;font-weight:800;letter-spacing:.1px;font-size:10px;line-height:1;flex-shrink:0}
+.strategy-bar{display:flex;height:16px;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.1);width:190px;flex:0 0 190px}
+.bar-segment{height:100%;transition:width .3s ease}
+.ev-positive{color:#4caf50;font-weight:800}
+.ev-negative{color:#e94560;font-weight:800}
+.ev-zero{color:#888}
+.small{font-size:11px;color:#888;padding:14px}
+@media (max-width:1200px){.strategy-table{font-size:10px}.strategy-table th{font-size:8px;padding:4px 2px}.strategy-table td{padding:2px 2px;height:24px}.strategy-bar{width:80px;flex-basis:80px}}
+@media (max-width:900px){.table-column{max-height:55vh}.strategy-bar{width:160px;flex-basis:160px}}
+</style></head><body><h2>1DRAW Strategy Table — Pot 3</h2>
+<div class="tabs">
+<div id="t_start" class="tab" onclick="setSeq('start')">Start</div>
+<div id="t_b" class="tab" onclick="setSeq('b')">b</div>
+<div id="t_br" class="tab" onclick="setSeq('br')">br</div>
+<div id="t_brr" class="tab" onclick="setSeq('brr')">brr</div>
+<div id="t_brrr" class="tab" onclick="setSeq('brrr')">brrr</div>
+<div id="t_k" class="tab" onclick="setSeq('k')">k</div>
+<div id="t_kb" class="tab" onclick="setSeq('kb')">kb</div>
+<div id="t_kbr" class="tab" onclick="setSeq('kbr')">kbr</div>
+<div id="t_kbrr" class="tab" onclick="setSeq('kbrr')">kbrr</div>
+<div id="t_kbrrr" class="tab" onclick="setSeq('kbrrr')">kbrrr</div>
+</div>
+<div id="p_start" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_b" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_br" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_brr" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_brrr" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_k" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_kb" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_kbr" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_kbrr" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="p_kbrrr" class="panel">
+  <div class="panel-header"><div class="left"></div><div class="right"></div></div>
+  <div class="lp-section solver-display">
+    <div class="freq-title">Overall Frequency</div>
+    <div class="freq-bar-container"></div>
+  </div>
+  <div class="lp-section strategy-tables" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+    <div class="tables-container">
+      <div class="table-column">
+        <table class="strategy-table">
+          <thead><tr>
+            <th class="col-strategy">Bucket / Strategy</th>
+            <th class="col-rate">Rate</th>
+            <th class="col-ev-btn">BTN EV</th>
+            <th class="col-ev-bb">BB EV</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const DATA = {"seqItems": [["start", ""], ["b", "b"], ["br", "br"], ["brr", "brr"], ["brrr", "brrr"], ["k", "k"], ["kb", "kb"], ["kbr", "kbr"], ["kbrr", "kbrr"], ["kbrrr", "kbrrr"]], "sequences": {"start": {"terminal": false, "actor": "BB", "actions": ["k", "b"], "overall": {"k": 64.5859, "b": 35.4141}, "rows": [{"bucket": "75", "rate": 0.5095, "strategy": {"k": 80.0, "b": 20.0}, "btn_ev": -1.020912, "bb_ev": 4.020912}, {"bucket": "76", "rate": 1.9105, "strategy": {"k": 2.0, "b": 98.0}, "btn_ev": -0.901562, "bb_ev": 3.901562}, {"bucket": "85", "rate": 1.2455, "strategy": {"k": 96.0, "b": 4.0}, "btn_ev": -0.673208, "bb_ev": 3.673208}, {"bucket": "86", "rate": 5.43, "strategy": {"k": 45.0, "b": 55.0}, "btn_ev": -0.456077, "bb_ev": 3.456077}, {"bucket": "87", "rate": 7.415, "strategy": {"k": 26.0, "b": 74.0}, "btn_ev": -0.083887, "bb_ev": 3.083887}, {"bucket": "95", "rate": 0.1775, "strategy": {"k": 100.0, "b": 0.0}, "btn_ev": 0.305306, "bb_ev": 2.694694}, {"bucket": "96", "rate": 1.2405, "strategy": {"k": 83.0, "b": 17.0}, "btn_ev": 0.366023, "bb_ev": 2.633977}, {"bucket": "97", "rate": 2.983, "strategy": {"k": 15.0, "b": 85.0}, "btn_ev": 0.553913, "bb_ev": 2.446087}, {"bucket": "98", "rate": 8.6605, "strategy": {"k": 3.0, "b": 97.0}, "btn_ev": 0.662397, "bb_ev": 2.337603}, {"bucket": "T5", "rate": 0.095, "strategy": {"k": 83.0, "b": 17.0}, "btn_ev": 0.973241, "bb_ev": 2.026759}, {"bucket": "T6", "rate": 0.6955, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 0.970198, "bb_ev": 2.029802}, {"bucket": "T7", "rate": 1.584, "strategy": {"k": 96.0, "b": 4.0}, "btn_ev": 1.070367, "bb_ev": 1.929633}, {"bucket": "T8", "rate": 4.917, "strategy": {"k": 7.0, "b": 93.0}, "btn_ev": 1.15658, "bb_ev": 1.84342}, {"bucket": "T9", "rate": 1.859, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 1.301714, "bb_ev": 1.698286}, {"bucket": "J8", "rate": 7.255, "strategy": {"k": 74.0, "b": 26.0}, "btn_ev": 1.568892, "bb_ev": 1.431108}, {"bucket": "J9", "rate": 1.7765, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 1.557491, "bb_ev": 1.442509}, {"bucket": "Q", "rate": 9.0085, "strategy": {"k": 100.0, "b": 0.0}, "btn_ev": 1.976053, "bb_ev": 1.023947}, {"bucket": "K", "rate": 9.1255, "strategy": {"k": 100.0, "b": 0.0}, "btn_ev": 2.246813, "bb_ev": 0.753187}, {"bucket": "A", "rate": 9.1105, "strategy": {"k": 100.0, "b": 0.0}, "btn_ev": 2.441252, "bb_ev": 0.558748}, {"bucket": "22", "rate": 2.591, "strategy": {"k": 94.0, "b": 6.0}, "btn_ev": 2.853149, "bb_ev": 0.146851}, {"bucket": "33", "rate": 3.2095, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 2.824262, "bb_ev": 0.175738}, {"bucket": "44", "rate": 2.8095, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 2.85383, "bb_ev": 0.14617}, {"bucket": "55", "rate": 3.345, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 2.850595, "bb_ev": 0.149405}, {"bucket": "66", "rate": 3.308, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 2.845819, "bb_ev": 0.154181}, {"bucket": "77", "rate": 2.184, "strategy": {"k": 98.0, "b": 2.0}, "btn_ev": 2.845976, "bb_ev": 0.154024}, {"bucket": "88", "rate": 3.666, "strategy": {"k": 15.0, "b": 85.0}, "btn_ev": 2.967722, "bb_ev": 0.032278}, {"bucket": "99", "rate": 1.286, "strategy": {"k": 1.0, "b": 99.0}, "btn_ev": 2.954633, "bb_ev": 0.045367}, {"bucket": "Str.", "rate": 2.6025, "strategy": {"k": 5.0, "b": 95.0}, "btn_ev": 3.029324, "bb_ev": -0.029324}]}, "b": {"terminal": false, "actor": "BTN", "actions": ["c", "f", "r"], "overall": {"c": 53.0263, "f": 26.5014, "r": 20.2328}, "rows": [{"bucket": "75", "rate": 1.203, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 4.58639, "bb_ev": -0.58639}, {"bucket": "76", "rate": 2.915, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 4.48516, "bb_ev": -0.48516}, {"bucket": "85", "rate": 1.1655, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 4.324003, "bb_ev": -0.324003}, {"bucket": "86", "rate": 4.3595, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 4.139888, "bb_ev": -0.139888}, {"bucket": "87", "rate": 6.917, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 3.54396, "bb_ev": 0.45604}, {"bucket": "95", "rate": 0.4945, "strategy": {"c": 33.0, "f": 0.0, "r": 67.0}, "btn_ev": 3.298666, "bb_ev": 0.701334}, {"bucket": "96", "rate": 1.7325, "strategy": {"c": 75.0, "f": 0.0, "r": 25.0}, "btn_ev": 3.199663, "bb_ev": 0.800337}, {"bucket": "97", "rate": 4.1105, "strategy": {"c": 99.0, "f": 0.0, "r": 1.0}, "btn_ev": 3.026756, "bb_ev": 0.973244}, {"bucket": "98", "rate": 6.751, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 2.608432, "bb_ev": 1.391568}, {"bucket": "T5", "rate": 0.2635, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 2.397115, "bb_ev": 1.602885}, {"bucket": "T6", "rate": 0.9165, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 2.465732, "bb_ev": 1.534268}, {"bucket": "T7", "rate": 2.271, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 2.59486, "bb_ev": 1.40514}, {"bucket": "T8", "rate": 3.815, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 2.330862, "bb_ev": 1.669138}, {"bucket": "T9", "rate": 1.803, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 2.146921, "bb_ev": 1.853079}, {"bucket": "J8", "rate": 7.347, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 2.027104, "bb_ev": 1.972896}, {"bucket": "J9", "rate": 1.778, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 1.726191, "bb_ev": 2.273809}, {"bucket": "Q", "rate": 9.134, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 1.354295, "bb_ev": 2.645705}, {"bucket": "K", "rate": 9.0835, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 1.032293, "bb_ev": 2.967707}, {"bucket": "A", "rate": 9.1445, "strategy": {"c": 36.0, "f": 63.0, "r": 0.0}, "btn_ev": 0.212362, "bb_ev": 3.787638}, {"bucket": "22", "rate": 3.5935, "strategy": {"c": 6.0, "f": 24.0, "r": 70.0}, "btn_ev": 0.796725, "bb_ev": 3.203275}, {"bucket": "33", "rate": 3.3475, "strategy": {"c": 0.0, "f": 99.0, "r": 0.0}, "btn_ev": 0.004148, "bb_ev": 3.995852}, {"bucket": "44", "rate": 3.0955, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 0.002503, "bb_ev": 3.997497}, {"bucket": "55", "rate": 2.9955, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 0.001473, "bb_ev": 3.998527}, {"bucket": "66", "rate": 2.8375, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 0.001588, "bb_ev": 3.998412}, {"bucket": "77", "rate": 2.563, "strategy": {"c": 49.0, "f": 43.0, "r": 9.0}, "btn_ev": -0.003737, "bb_ev": 4.003737}, {"bucket": "88", "rate": 2.665, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 0.000761, "bb_ev": 3.999239}, {"bucket": "99", "rate": 1.2745, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 0.001642, "bb_ev": 3.998358}, {"bucket": "Str.", "rate": 2.4235, "strategy": {"c": 0.0, "f": 95.0, "r": 5.0}, "btn_ev": 0.056389, "bb_ev": 3.943611}]}, "br": {"terminal": false, "actor": "BB", "actions": ["c", "f", "r"], "overall": {"c": 61.8432, "f": 31.7582, "r": 6.3441}, "rows": [{"bucket": "75", "rate": 0.283636, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": -0.377829, "bb_ev": 6.377829}, {"bucket": "76", "rate": 5.286078, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": -0.177703, "bb_ev": 6.177703}, {"bucket": "85", "rate": 0.126936, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 0.34123, "bb_ev": 5.65877}, {"bucket": "86", "rate": 8.383353, "strategy": {"c": 100.0, "f": 0.0, "r": 0.0}, "btn_ev": 0.466974, "bb_ev": 5.533026}, {"bucket": "87", "rate": 15.540556, "strategy": {"c": 100.0, "f": 0.0, "r": 0.0}, "btn_ev": 0.926448, "bb_ev": 5.073552}, {"bucket": "95", "rate": 0.002425, "strategy": {"c": 8.0, "f": 67.0, "r": 24.0}, "btn_ev": 4.502945, "bb_ev": 1.497055}, {"bucket": "96", "rate": 0.588222, "strategy": {"c": 90.0, "f": 8.0, "r": 2.0}, "btn_ev": 1.658559, "bb_ev": 4.341441}, {"bucket": "97", "rate": 7.131512, "strategy": {"c": 75.0, "f": 25.0, "r": 0.0}, "btn_ev": 2.678692, "bb_ev": 3.321308}, {"bucket": "98", "rate": 23.684948, "strategy": {"c": 77.0, "f": 23.0, "r": 0.0}, "btn_ev": 2.770512, "bb_ev": 3.229488}, {"bucket": "T5", "rate": 0.045587, "strategy": {"c": 0.0, "f": 99.0, "r": 0.0}, "btn_ev": 5.971741, "bb_ev": 0.028259}, {"bucket": "T6", "rate": 0.020553, "strategy": {"c": 32.0, "f": 66.0, "r": 2.0}, "btn_ev": 4.721774, "bb_ev": 1.278226}, {"bucket": "T7", "rate": 0.198491, "strategy": {"c": 68.0, "f": 31.0, "r": 1.0}, "btn_ev": 3.448667, "bb_ev": 2.551333}, {"bucket": "T8", "rate": 12.895585, "strategy": {"c": 80.0, "f": 20.0, "r": 0.0}, "btn_ev": 3.032061, "bb_ev": 2.967939}, {"bucket": "T9", "rate": 0.077156, "strategy": {"c": 76.0, "f": 22.0, "r": 1.0}, "btn_ev": 3.241126, "bb_ev": 2.758874}, {"bucket": "J8", "rate": 5.243122, "strategy": {"c": 62.0, "f": 37.0, "r": 0.0}, "btn_ev": 4.069083, "bb_ev": 1.930917}, {"bucket": "J9", "rate": 0.028392, "strategy": {"c": 86.0, "f": 13.0, "r": 1.0}, "btn_ev": 3.51459, "bb_ev": 2.48541}, {"bucket": "Q", "rate": 0.050712, "strategy": {"c": 19.0, "f": 78.0, "r": 3.0}, "btn_ev": 5.437479, "bb_ev": 0.562521}, {"bucket": "K", "rate": 0.009458, "strategy": {"c": 12.0, "f": 83.0, "r": 6.0}, "btn_ev": 5.601519, "bb_ev": 0.398481}, {"bucket": "A", "rate": 0.01852, "strategy": {"c": 6.0, "f": 87.0, "r": 7.0}, "btn_ev": 5.69483, "bb_ev": 0.30517}, {"bucket": "22", "rate": 0.424938, "strategy": {"c": 0.0, "f": 99.0, "r": 1.0}, "btn_ev": 5.966505, "bb_ev": 0.033495}, {"bucket": "33", "rate": 0.097539, "strategy": {"c": 0.0, "f": 44.0, "r": 56.0}, "btn_ev": 4.050738, "bb_ev": 1.949262}, {"bucket": "44", "rate": 0.066103, "strategy": {"c": 0.0, "f": 43.0, "r": 57.0}, "btn_ev": 4.154478, "bb_ev": 1.845522}, {"bucket": "55", "rate": 0.083221, "strategy": {"c": 0.0, "f": 63.0, "r": 36.0}, "btn_ev": 4.697839, "bb_ev": 1.302161}, {"bucket": "66", "rate": 0.092364, "strategy": {"c": 0.0, "f": 90.0, "r": 10.0}, "btn_ev": 5.659849, "bb_ev": 0.340151}, {"bucket": "77", "rate": 0.141232, "strategy": {"c": 0.0, "f": 99.0, "r": 1.0}, "btn_ev": 5.961644, "bb_ev": 0.038356}, {"bucket": "88", "rate": 8.858643, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 5.99116, "bb_ev": 0.00884}, {"bucket": "99", "rate": 3.604508, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 5.989492, "bb_ev": 0.010508}, {"bucket": "Str.", "rate": 7.016208, "strategy": {"c": 0.0, "f": 93.0, "r": 7.0}, "btn_ev": 5.751195, "bb_ev": 0.248805}]}, "brr": {"terminal": false, "actor": "BTN", "actions": ["c", "f", "r"], "overall": {"c": 56.7281, "f": 23.5934, "r": 19.6059}, "rows": [{"bucket": "75", "rate": 5.899791, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 8.350676, "bb_ev": -0.350676}, {"bucket": "76", "rate": 14.29501, "strategy": {"c": 12.0, "f": 0.0, "r": 88.0}, "btn_ev": 8.174143, "bb_ev": -0.174143}, {"bucket": "85", "rate": 5.71413, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 7.783938, "bb_ev": 0.216062}, {"bucket": "86", "rate": 21.367583, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 7.470338, "bb_ev": 0.529662}, {"bucket": "87", "rate": 33.871226, "strategy": {"c": 69.0, "f": 31.0, "r": 0.0}, "btn_ev": 4.75096, "bb_ev": 3.24904}, {"bucket": "95", "rate": 1.622127, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 6.49958, "bb_ev": 1.50042}, {"bucket": "96", "rate": 2.142937, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 6.447376, "bb_ev": 1.552624}, {"bucket": "97", "rate": 0.230834, "strategy": {"c": 98.0, "f": 2.0, "r": 0.0}, "btn_ev": 6.160548, "bb_ev": 1.839452}, {"bucket": "98", "rate": 0.132301, "strategy": {"c": 48.0, "f": 51.0, "r": 1.0}, "btn_ev": 2.899254, "bb_ev": 5.100746}, {"bucket": "T5", "rate": 0.003676, "strategy": {"c": 32.0, "f": 67.0, "r": 1.0}, "btn_ev": 1.820289, "bb_ev": 6.179711}, {"bucket": "T6", "rate": 0.012784, "strategy": {"c": 27.0, "f": 71.0, "r": 1.0}, "btn_ev": 1.576567, "bb_ev": 6.423433}, {"bucket": "T7", "rate": 0.031975, "strategy": {"c": 28.0, "f": 71.0, "r": 1.0}, "btn_ev": 1.514821, "bb_ev": 6.485179}, {"bucket": "T8", "rate": 0.050779, "strategy": {"c": 9.0, "f": 90.0, "r": 1.0}, "btn_ev": 0.534856, "bb_ev": 7.465144}, {"bucket": "T9", "rate": 0.017628, "strategy": {"c": 3.0, "f": 96.0, "r": 1.0}, "btn_ev": 0.230498, "bb_ev": 7.769502}, {"bucket": "J8", "rate": 0.081247, "strategy": {"c": 1.0, "f": 98.0, "r": 1.0}, "btn_ev": 0.130907, "bb_ev": 7.869093}, {"bucket": "J9", "rate": 0.018522, "strategy": {"c": 2.0, "f": 97.0, "r": 1.0}, "btn_ev": 0.166119, "bb_ev": 7.833881}, {"bucket": "Q", "rate": 0.106782, "strategy": {"c": 1.0, "f": 98.0, "r": 1.0}, "btn_ev": 0.111616, "bb_ev": 7.888384}, {"bucket": "K", "rate": 0.111783, "strategy": {"c": 5.0, "f": 93.0, "r": 3.0}, "btn_ev": 0.247967, "bb_ev": 7.752033}, {"bucket": "A", "rate": 0.049954, "strategy": {"c": 1.0, "f": 97.0, "r": 2.0}, "btn_ev": 0.107478, "bb_ev": 7.892522}, {"bucket": "22", "rate": 12.404123, "strategy": {"c": 5.0, "f": 95.0, "r": 0.0}, "btn_ev": 0.041563, "bb_ev": 7.958437}, {"bucket": "33", "rate": 0.062401, "strategy": {"c": 15.0, "f": 82.0, "r": 3.0}, "btn_ev": 0.238251, "bb_ev": 7.761749}, {"bucket": "44", "rate": 0.034135, "strategy": {"c": 19.0, "f": 59.0, "r": 22.0}, "btn_ev": 1.104092, "bb_ev": 6.895908}, {"bucket": "55", "rate": 0.024511, "strategy": {"c": 21.0, "f": 74.0, "r": 5.0}, "btn_ev": 0.325059, "bb_ev": 7.674941}, {"bucket": "66", "rate": 0.024048, "strategy": {"c": 10.0, "f": 73.0, "r": 17.0}, "btn_ev": 0.785514, "bb_ev": 7.214486}, {"bucket": "77", "rate": 1.099516, "strategy": {"c": 13.0, "f": 1.0, "r": 86.0}, "btn_ev": 3.740407, "bb_ev": 4.259593}, {"bucket": "88", "rate": 0.018959, "strategy": {"c": 0.0, "f": 98.0, "r": 2.0}, "btn_ev": 0.085441, "bb_ev": 7.914559}, {"bucket": "99", "rate": 0.011009, "strategy": {"c": 0.0, "f": 98.0, "r": 1.0}, "btn_ev": 0.065206, "bb_ev": 7.934794}, {"bucket": "Str.", "rate": 0.560228, "strategy": {"c": 0.0, "f": 72.0, "r": 28.0}, "btn_ev": 1.100305, "bb_ev": 6.899695}]}, "brrr": {"terminal": false, "actor": "BB", "actions": ["c", "f"], "overall": {"c": 85.7966, "f": 14.2034}, "rows": [{"bucket": "75", "rate": 4.289235, "strategy": {"c": 100.0, "f": 0.0}, "btn_ev": 0.075626, "bb_ev": 9.924374}, {"bucket": "76", "rate": 79.918696, "strategy": {"c": 100.0, "f": 0.0}, "btn_ev": 0.265077, "bb_ev": 9.734923}, {"bucket": "85", "rate": 1.915759, "strategy": {"c": 32.0, "f": 68.0}, "btn_ev": 6.995056, "bb_ev": 3.004944}, {"bucket": "86", "rate": 0.563638, "strategy": {"c": 43.0, "f": 57.0}, "btn_ev": 6.051879, "bb_ev": 3.948121}, {"bucket": "87", "rate": 0.871003, "strategy": {"c": 18.0, "f": 82.0}, "btn_ev": 8.484721, "bb_ev": 1.515279}, {"bucket": "95", "rate": 0.008956, "strategy": {"c": 3.0, "f": 97.0}, "btn_ev": 9.790676, "bb_ev": 0.209324}, {"bucket": "96", "rate": 0.17782, "strategy": {"c": 39.0, "f": 61.0}, "btn_ev": 6.897503, "bb_ev": 3.102497}, {"bucket": "97", "rate": 0.302626, "strategy": {"c": 11.0, "f": 89.0}, "btn_ev": 9.187365, "bb_ev": 0.812635}, {"bucket": "98", "rate": 1.038496, "strategy": {"c": 14.0, "f": 86.0}, "btn_ev": 8.986164, "bb_ev": 1.013836}, {"bucket": "T5", "rate": 0.001764, "strategy": {"c": 38.0, "f": 62.0}, "btn_ev": 7.527891, "bb_ev": 2.472109}, {"bucket": "T6", "rate": 0.006556, "strategy": {"c": 77.0, "f": 23.0}, "btn_ev": 5.028213, "bb_ev": 4.971787}, {"bucket": "T7", "rate": 0.034579, "strategy": {"c": 36.0, "f": 64.0}, "btn_ev": 7.657695, "bb_ev": 2.342305}, {"bucket": "T8", "rate": 0.570411, "strategy": {"c": 18.0, "f": 82.0}, "btn_ev": 8.862993, "bb_ev": 1.137007}, {"bucket": "T9", "rate": 0.015913, "strategy": {"c": 71.0, "f": 29.0}, "btn_ev": 5.624377, "bb_ev": 4.375623}, {"bucket": "J8", "rate": 0.277976, "strategy": {"c": 30.0, "f": 70.0}, "btn_ev": 8.434647, "bb_ev": 1.565353}, {"bucket": "J9", "rate": 0.004386, "strategy": {"c": 62.0, "f": 38.0}, "btn_ev": 6.715967, "bb_ev": 3.284033}, {"bucket": "Q", "rate": 0.022505, "strategy": {"c": 84.0, "f": 16.0}, "btn_ev": 6.595001, "bb_ev": 3.404999}, {"bucket": "K", "rate": 0.008215, "strategy": {"c": 71.0, "f": 29.0}, "btn_ev": 8.109077, "bb_ev": 1.890923}, {"bucket": "A", "rate": 0.018995, "strategy": {"c": 78.0, "f": 22.0}, "btn_ev": 8.335635, "bb_ev": 1.664365}, {"bucket": "22", "rate": 0.060125, "strategy": {"c": 32.0, "f": 68.0}, "btn_ev": 9.784272, "bb_ev": 0.215728}, {"bucket": "33", "rate": 0.822372, "strategy": {"c": 3.0, "f": 97.0}, "btn_ev": 9.971936, "bb_ev": 0.028064}, {"bucket": "44", "rate": 0.565908, "strategy": {"c": 1.0, "f": 99.0}, "btn_ev": 9.996369, "bb_ev": 0.003631}, {"bucket": "55", "rate": 0.455785, "strategy": {"c": 1.0, "f": 99.0}, "btn_ev": 9.992644, "bb_ev": 0.007356}, {"bucket": "66", "rate": 0.139005, "strategy": {"c": 2.0, "f": 98.0}, "btn_ev": 9.994276, "bb_ev": 0.005724}, {"bucket": "77", "rate": 0.022946, "strategy": {"c": 51.0, "f": 49.0}, "btn_ev": 9.775596, "bb_ev": 0.224404}, {"bucket": "88", "rate": 0.370839, "strategy": {"c": 0.0, "f": 100.0}, "btn_ev": 10.000558, "bb_ev": -0.000558}, {"bucket": "99", "rate": 0.171832, "strategy": {"c": 1.0, "f": 99.0}, "btn_ev": 10.00856, "bb_ev": -0.00856}, {"bucket": "Str.", "rate": 7.343656, "strategy": {"c": 0.0, "f": 100.0}, "btn_ev": 10.000022, "bb_ev": -2.2e-05}]}, "k": {"terminal": false, "actor": "BTN", "actions": ["k", "b"], "overall": {"k": 40.9063, "b": 59.0937}, "rows": [{"bucket": "75", "rate": 1.203, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 4.063646, "bb_ev": -1.063646}, {"bucket": "76", "rate": 2.915, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 3.850464, "bb_ev": -0.850464}, {"bucket": "85", "rate": 1.1655, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 3.790083, "bb_ev": -0.790083}, {"bucket": "86", "rate": 4.3595, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 3.452023, "bb_ev": -0.452023}, {"bucket": "87", "rate": 6.917, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 3.185623, "bb_ev": -0.185623}, {"bucket": "95", "rate": 0.4945, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 2.64282, "bb_ev": 0.35718}, {"bucket": "96", "rate": 1.7325, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 2.681664, "bb_ev": 0.318336}, {"bucket": "97", "rate": 4.1105, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 2.626501, "bb_ev": 0.373499}, {"bucket": "98", "rate": 6.751, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 2.268123, "bb_ev": 0.731877}, {"bucket": "T5", "rate": 0.2635, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 2.106677, "bb_ev": 0.893323}, {"bucket": "T6", "rate": 0.9165, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 2.15792, "bb_ev": 0.84208}, {"bucket": "T7", "rate": 2.271, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 1.974787, "bb_ev": 1.025213}, {"bucket": "T8", "rate": 3.815, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 1.843811, "bb_ev": 1.156189}, {"bucket": "T9", "rate": 1.803, "strategy": {"k": 0.0, "b": 100.0}, "btn_ev": 1.867284, "bb_ev": 1.132716}, {"bucket": "J8", "rate": 7.347, "strategy": {"k": 1.0, "b": 99.0}, "btn_ev": 1.306595, "bb_ev": 1.693405}, {"bucket": "J9", "rate": 1.778, "strategy": {"k": 35.0, "b": 65.0}, "btn_ev": 1.433338, "bb_ev": 1.566662}, {"bucket": "Q", "rate": 9.134, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 1.444608, "bb_ev": 1.555392}, {"bucket": "K", "rate": 9.0835, "strategy": {"k": 100.0, "b": 0.0}, "btn_ev": 1.223252, "bb_ev": 1.776748}, {"bucket": "A", "rate": 9.1445, "strategy": {"k": 100.0, "b": 0.0}, "btn_ev": 0.805996, "bb_ev": 2.194004}, {"bucket": "22", "rate": 3.5935, "strategy": {"k": 96.0, "b": 4.0}, "btn_ev": 0.599377, "bb_ev": 2.400623}, {"bucket": "33", "rate": 3.3475, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 0.621791, "bb_ev": 2.378209}, {"bucket": "44", "rate": 3.0955, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 0.530474, "bb_ev": 2.469526}, {"bucket": "55", "rate": 2.9955, "strategy": {"k": 99.0, "b": 1.0}, "btn_ev": 0.491012, "bb_ev": 2.508988}, {"bucket": "66", "rate": 2.8375, "strategy": {"k": 2.0, "b": 98.0}, "btn_ev": 0.16634, "bb_ev": 2.83366}, {"bucket": "77", "rate": 2.563, "strategy": {"k": 1.0, "b": 99.0}, "btn_ev": 0.226477, "bb_ev": 2.773523}, {"bucket": "88", "rate": 2.665, "strategy": {"k": 1.0, "b": 99.0}, "btn_ev": 0.197483, "bb_ev": 2.802517}, {"bucket": "99", "rate": 1.2745, "strategy": {"k": 1.0, "b": 99.0}, "btn_ev": 0.196336, "bb_ev": 2.803664}, {"bucket": "Str.", "rate": 2.4235, "strategy": {"k": 1.0, "b": 99.0}, "btn_ev": 0.252483, "bb_ev": 2.747517}]}, "kb": {"terminal": false, "actor": "BB", "actions": ["c", "f", "r"], "overall": {"c": 52.0248, "f": 36.4284, "r": 11.2125}, "rows": [{"bucket": "75", "rate": 0.632973, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": -0.78013, "bb_ev": 4.78013}, {"bucket": "76", "rate": 0.065167, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": -0.607738, "bb_ev": 4.607738}, {"bucket": "85", "rate": 1.856987, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": -0.365543, "bb_ev": 4.365543}, {"bucket": "86", "rate": 3.815486, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": -0.131182, "bb_ev": 4.131182}, {"bucket": "87", "rate": 2.972989, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 0.712221, "bb_ev": 3.287779}, {"bucket": "95", "rate": 0.273208, "strategy": {"c": 15.0, "f": 0.0, "r": 85.0}, "btn_ev": 0.714073, "bb_ev": 3.285927}, {"bucket": "96", "rate": 1.597082, "strategy": {"c": 96.0, "f": 0.0, "r": 4.0}, "btn_ev": 1.101554, "bb_ev": 2.898446}, {"bucket": "97", "rate": 0.715126, "strategy": {"c": 93.0, "f": 0.0, "r": 7.0}, "btn_ev": 1.129644, "bb_ev": 2.870356}, {"bucket": "98", "rate": 0.447061, "strategy": {"c": 98.0, "f": 1.0, "r": 2.0}, "btn_ev": 1.259916, "bb_ev": 2.740084}, {"bucket": "T5", "rate": 0.122013, "strategy": {"c": 88.0, "f": 0.0, "r": 12.0}, "btn_ev": 1.724974, "bb_ev": 2.275026}, {"bucket": "T6", "rate": 1.064474, "strategy": {"c": 97.0, "f": 0.0, "r": 3.0}, "btn_ev": 1.531622, "bb_ev": 2.468378}, {"bucket": "T7", "rate": 2.341419, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 1.69155, "bb_ev": 2.30845}, {"bucket": "T8", "rate": 0.555334, "strategy": {"c": 99.0, "f": 1.0, "r": 1.0}, "btn_ev": 1.756252, "bb_ev": 2.243748}, {"bucket": "T9", "rate": 2.833084, "strategy": {"c": 99.0, "f": 0.0, "r": 0.0}, "btn_ev": 1.669054, "bb_ev": 2.330946}, {"bucket": "J8", "rate": 8.354836, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 2.109073, "bb_ev": 1.890927}, {"bucket": "J9", "rate": 2.732141, "strategy": {"c": 99.0, "f": 1.0, "r": 0.0}, "btn_ev": 2.282888, "bb_ev": 1.717112}, {"bucket": "Q", "rate": 13.905468, "strategy": {"c": 82.0, "f": 18.0, "r": 0.0}, "btn_ev": 2.953516, "bb_ev": 1.046484}, {"bucket": "K", "rate": 14.108982, "strategy": {"c": 74.0, "f": 26.0, "r": 0.0}, "btn_ev": 3.16808, "bb_ev": 0.83192}, {"bucket": "A", "rate": 14.080828, "strategy": {"c": 69.0, "f": 30.0, "r": 0.0}, "btn_ev": 3.674161, "bb_ev": 0.325839}, {"bucket": "22", "rate": 3.775125, "strategy": {"c": 0.0, "f": 62.0, "r": 38.0}, "btn_ev": 3.725596, "bb_ev": 0.274404}, {"bucket": "33", "rate": 4.910721, "strategy": {"c": 0.0, "f": 99.0, "r": 0.0}, "btn_ev": 3.997324, "bb_ev": 0.002676}, {"bucket": "44", "rate": 4.309237, "strategy": {"c": 0.0, "f": 99.0, "r": 0.0}, "btn_ev": 3.998654, "bb_ev": 0.001346}, {"bucket": "55", "rate": 5.128122, "strategy": {"c": 0.0, "f": 99.0, "r": 0.0}, "btn_ev": 3.997667, "bb_ev": 0.002333}, {"bucket": "66", "rate": 5.065897, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 3.999165, "bb_ev": 0.000835}, {"bucket": "77", "rate": 3.300723, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 3.996652, "bb_ev": 0.003348}, {"bucket": "88", "rate": 0.827329, "strategy": {"c": 0.0, "f": 96.0, "r": 3.0}, "btn_ev": 3.979645, "bb_ev": 0.020355}, {"bucket": "99", "rate": 0.018538, "strategy": {"c": 0.0, "f": 98.0, "r": 2.0}, "btn_ev": 3.991332, "bb_ev": 0.008668}, {"bucket": "Str.", "rate": 0.189651, "strategy": {"c": 0.0, "f": 99.0, "r": 1.0}, "btn_ev": 3.991702, "bb_ev": 0.008298}]}, "kbr": {"terminal": false, "actor": "BTN", "actions": ["c", "f", "r"], "overall": {"c": 57.2416, "f": 32.1615, "r": 10.4897}, "rows": [{"bucket": "75", "rate": 2.038033, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 6.323645, "bb_ev": -0.323645}, {"bucket": "76", "rate": 4.937803, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 6.23059, "bb_ev": -0.23059}, {"bucket": "85", "rate": 1.974005, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": 6.09572, "bb_ev": -0.09572}, {"bucket": "86", "rate": 7.380485, "strategy": {"c": 94.0, "f": 0.0, "r": 6.0}, "btn_ev": 5.592338, "bb_ev": 0.407662}, {"bucket": "87", "rate": 11.687193, "strategy": {"c": 100.0, "f": 0.0, "r": 0.0}, "btn_ev": 5.33991, "bb_ev": 0.66009}, {"bucket": "95", "rate": 0.834925, "strategy": {"c": 80.0, "f": 19.0, "r": 1.0}, "btn_ev": 3.786171, "bb_ev": 2.213829}, {"bucket": "96", "rate": 2.92516, "strategy": {"c": 81.0, "f": 19.0, "r": 0.0}, "btn_ev": 3.829553, "bb_ev": 2.170447}, {"bucket": "97", "rate": 6.938704, "strategy": {"c": 82.0, "f": 18.0, "r": 0.0}, "btn_ev": 3.887869, "bb_ev": 2.112131}, {"bucket": "98", "rate": 11.391651, "strategy": {"c": 76.0, "f": 24.0, "r": 0.0}, "btn_ev": 3.094868, "bb_ev": 2.905132}, {"bucket": "T5", "rate": 0.444525, "strategy": {"c": 10.0, "f": 90.0, "r": 0.0}, "btn_ev": 0.407013, "bb_ev": 5.592987}, {"bucket": "T6", "rate": 1.546475, "strategy": {"c": 36.0, "f": 64.0, "r": 0.0}, "btn_ev": 1.385194, "bb_ev": 4.614806}, {"bucket": "T7", "rate": 3.832513, "strategy": {"c": 76.0, "f": 24.0, "r": 0.0}, "btn_ev": 2.981523, "bb_ev": 3.018477}, {"bucket": "T8", "rate": 6.436396, "strategy": {"c": 89.0, "f": 10.0, "r": 0.0}, "btn_ev": 3.203124, "bb_ev": 2.796876}, {"bucket": "T9", "rate": 3.039683, "strategy": {"c": 9.0, "f": 91.0, "r": 0.0}, "btn_ev": 0.311844, "bb_ev": 5.688156}, {"bucket": "J8", "rate": 12.364437, "strategy": {"c": 93.0, "f": 6.0, "r": 1.0}, "btn_ev": 2.890371, "bb_ev": 3.109629}, {"bucket": "J9", "rate": 1.950002, "strategy": {"c": 10.0, "f": 90.0, "r": 0.0}, "btn_ev": 0.295786, "bb_ev": 5.704214}, {"bucket": "Q", "rate": 0.088268, "strategy": {"c": 18.0, "f": 76.0, "r": 6.0}, "btn_ev": 0.596394, "bb_ev": 5.403606}, {"bucket": "K", "rate": 0.049994, "strategy": {"c": 7.0, "f": 70.0, "r": 23.0}, "btn_ev": 1.048519, "bb_ev": 4.951481}, {"bucket": "A", "rate": 0.02399, "strategy": {"c": 7.0, "f": 52.0, "r": 40.0}, "btn_ev": 1.626344, "bb_ev": 4.373656}, {"bucket": "22", "rate": 0.265542, "strategy": {"c": 0.0, "f": 98.0, "r": 2.0}, "btn_ev": 0.063607, "bb_ev": 5.936393}, {"bucket": "33", "rate": 0.044278, "strategy": {"c": 1.0, "f": 15.0, "r": 84.0}, "btn_ev": 3.064697, "bb_ev": 2.935303}, {"bucket": "44", "rate": 0.037438, "strategy": {"c": 1.0, "f": 18.0, "r": 82.0}, "btn_ev": 3.038792, "bb_ev": 2.961208}, {"bucket": "55", "rate": 0.0378, "strategy": {"c": 1.0, "f": 20.0, "r": 79.0}, "btn_ev": 3.018642, "bb_ev": 2.981358}, {"bucket": "66", "rate": 4.728325, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 0.013943, "bb_ev": 5.986057}, {"bucket": "77", "rate": 4.297888, "strategy": {"c": 0.0, "f": 99.0, "r": 0.0}, "btn_ev": 0.016681, "bb_ev": 5.983319}, {"bucket": "88", "rate": 4.482828, "strategy": {"c": 0.0, "f": 95.0, "r": 5.0}, "btn_ev": 0.177625, "bb_ev": 5.822375}, {"bucket": "99", "rate": 2.145407, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 0.01837, "bb_ev": 5.98163}, {"bucket": "Str.", "rate": 4.076251, "strategy": {"c": 0.0, "f": 85.0, "r": 15.0}, "btn_ev": 0.570179, "bb_ev": 5.429821}]}, "kbrr": {"terminal": false, "actor": "BB", "actions": ["c", "f", "r"], "overall": {"c": 70.7187, "f": 22.3575, "r": 6.5865}, "rows": [{"bucket": "75", "rate": 5.519198, "strategy": {"c": 0.0, "f": 0.0, "r": 100.0}, "btn_ev": -0.157125, "bb_ev": 8.157125}, {"bucket": "76", "rate": 0.5676, "strategy": {"c": 5.0, "f": 0.0, "r": 95.0}, "btn_ev": 0.049233, "bb_ev": 7.950767}, {"bucket": "85", "rate": 16.183713, "strategy": {"c": 100.0, "f": 0.0, "r": 0.0}, "btn_ev": 0.394975, "bb_ev": 7.605025}, {"bucket": "86", "rate": 33.240819, "strategy": {"c": 98.0, "f": 1.0, "r": 0.0}, "btn_ev": 0.755632, "bb_ev": 7.244368}, {"bucket": "87", "rate": 25.849017, "strategy": {"c": 68.0, "f": 32.0, "r": 0.0}, "btn_ev": 3.334536, "bb_ev": 4.665464}, {"bucket": "95", "rate": 2.023268, "strategy": {"c": 98.0, "f": 2.0, "r": 0.0}, "btn_ev": 1.574775, "bb_ev": 6.425225}, {"bucket": "96", "rate": 0.51912, "strategy": {"c": 29.0, "f": 71.0, "r": 0.0}, "btn_ev": 6.205291, "bb_ev": 1.794709}, {"bucket": "97", "rate": 0.429603, "strategy": {"c": 12.0, "f": 88.0, "r": 0.0}, "btn_ev": 7.255096, "bb_ev": 0.744904}, {"bucket": "98", "rate": 0.066722, "strategy": {"c": 39.0, "f": 58.0, "r": 3.0}, "btn_ev": 5.600414, "bb_ev": 2.399586}, {"bucket": "T5", "rate": 0.125199, "strategy": {"c": 47.0, "f": 53.0, "r": 0.0}, "btn_ev": 5.554555, "bb_ev": 2.445445}, {"bucket": "T6", "rate": 0.251993, "strategy": {"c": 53.0, "f": 47.0, "r": 0.0}, "btn_ev": 5.251242, "bb_ev": 2.748758}, {"bucket": "T7", "rate": 0.087782, "strategy": {"c": 35.0, "f": 64.0, "r": 1.0}, "btn_ev": 6.137607, "bb_ev": 1.862393}, {"bucket": "T8", "rate": 0.045168, "strategy": {"c": 24.0, "f": 73.0, "r": 3.0}, "btn_ev": 6.694793, "bb_ev": 1.305207}, {"bucket": "T9", "rate": 0.11462, "strategy": {"c": 16.0, "f": 83.0, "r": 1.0}, "btn_ev": 7.170397, "bb_ev": 0.829603}, {"bucket": "J8", "rate": 0.301213, "strategy": {"c": 4.0, "f": 95.0, "r": 1.0}, "btn_ev": 7.793756, "bb_ev": 0.206244}, {"bucket": "J9", "rate": 0.08418, "strategy": {"c": 3.0, "f": 97.0, "r": 1.0}, "btn_ev": 7.847913, "bb_ev": 0.152087}, {"bucket": "Q", "rate": 0.484039, "strategy": {"c": 6.0, "f": 93.0, "r": 1.0}, "btn_ev": 7.762228, "bb_ev": 0.237772}, {"bucket": "K", "rate": 0.343659, "strategy": {"c": 10.0, "f": 89.0, "r": 1.0}, "btn_ev": 7.671011, "bb_ev": 0.328989}, {"bucket": "A", "rate": 0.33227, "strategy": {"c": 12.0, "f": 86.0, "r": 1.0}, "btn_ev": 7.727793, "bb_ev": 0.272207}, {"bucket": "22", "rate": 12.461104, "strategy": {"c": 14.0, "f": 83.0, "r": 3.0}, "btn_ev": 7.763061, "bb_ev": 0.236939}, {"bucket": "33", "rate": 0.192566, "strategy": {"c": 5.0, "f": 90.0, "r": 5.0}, "btn_ev": 7.68994, "bb_ev": 0.31006}, {"bucket": "44", "rate": 0.134949, "strategy": {"c": 3.0, "f": 92.0, "r": 5.0}, "btn_ev": 7.711563, "bb_ev": 0.288437}, {"bucket": "55", "rate": 0.16213, "strategy": {"c": 5.0, "f": 74.0, "r": 20.0}, "btn_ev": 6.779457, "bb_ev": 1.220543}, {"bucket": "66", "rate": 0.123415, "strategy": {"c": 2.0, "f": 94.0, "r": 4.0}, "btn_ev": 7.76218, "bb_ev": 0.23782}, {"bucket": "77", "rate": 0.083481, "strategy": {"c": 4.0, "f": 6.0, "r": 89.0}, "btn_ev": 2.74555, "bb_ev": 5.25445}, {"bucket": "88", "rate": 0.249704, "strategy": {"c": 0.0, "f": 100.0, "r": 0.0}, "btn_ev": 7.978862, "bb_ev": 0.021138}, {"bucket": "99", "rate": 0.002916, "strategy": {"c": 0.0, "f": 97.0, "r": 2.0}, "btn_ev": 7.865857, "bb_ev": 0.134143}, {"bucket": "Str.", "rate": 0.020553, "strategy": {"c": 0.0, "f": 74.0, "r": 26.0}, "btn_ev": 6.557968, "bb_ev": 1.442032}]}, "kbrrr": {"terminal": false, "actor": "BTN", "actions": ["c", "f"], "overall": {"c": 84.4147, "f": 15.5853}, "rows": [{"bucket": "75", "rate": 19.048982, "strategy": {"c": 100.0, "f": 0.0}, "btn_ev": 9.938125, "bb_ev": 0.061875}, {"bucket": "76", "rate": 46.146257, "strategy": {"c": 100.0, "f": 0.0}, "btn_ev": 9.827566, "bb_ev": 0.172434}, {"bucket": "85", "rate": 18.445493, "strategy": {"c": 95.0, "f": 5.0}, "btn_ev": 9.268692, "bb_ev": 0.731308}, {"bucket": "86", "rate": 4.447252, "strategy": {"c": 28.0, "f": 72.0}, "btn_ev": 2.615007, "bb_ev": 7.384993}, {"bucket": "87", "rate": 0.317073, "strategy": {"c": 34.0, "f": 66.0}, "btn_ev": 2.965013, "bb_ev": 7.034987}, {"bucket": "95", "rate": 0.044112, "strategy": {"c": 13.0, "f": 87.0}, "btn_ev": 1.055658, "bb_ev": 8.944342}, {"bucket": "96", "rate": 0.087063, "strategy": {"c": 22.0, "f": 78.0}, "btn_ev": 1.809645, "bb_ev": 8.190355}, {"bucket": "97", "rate": 0.19034, "strategy": {"c": 18.0, "f": 82.0}, "btn_ev": 1.371654, "bb_ev": 8.628346}, {"bucket": "98", "rate": 0.327104, "strategy": {"c": 3.0, "f": 97.0}, "btn_ev": 0.251904, "bb_ev": 9.748096}, {"bucket": "T5", "rate": 0.015039, "strategy": {"c": 26.0, "f": 74.0}, "btn_ev": 1.710369, "bb_ev": 8.289631}, {"bucket": "T6", "rate": 0.052512, "strategy": {"c": 21.0, "f": 79.0}, "btn_ev": 1.346372, "bb_ev": 8.653628}, {"bucket": "T7", "rate": 0.116194, "strategy": {"c": 16.0, "f": 84.0}, "btn_ev": 0.998309, "bb_ev": 9.001691}, {"bucket": "T8", "rate": 0.206124, "strategy": {"c": 8.0, "f": 92.0}, "btn_ev": 0.508868, "bb_ev": 9.491132}, {"bucket": "T9", "rate": 0.083132, "strategy": {"c": 7.0, "f": 93.0}, "btn_ev": 0.445331, "bb_ev": 9.554669}, {"bucket": "J8", "rate": 0.789741, "strategy": {"c": 6.0, "f": 94.0}, "btn_ev": 0.31445, "bb_ev": 9.68555}, {"bucket": "J9", "rate": 0.053918, "strategy": {"c": 14.0, "f": 86.0}, "btn_ev": 0.745636, "bb_ev": 9.254364}, {"bucket": "Q", "rate": 0.048799, "strategy": {"c": 21.0, "f": 79.0}, "btn_ev": 0.953223, "bb_ev": 9.046777}, {"bucket": "K", "rate": 0.108458, "strategy": {"c": 23.0, "f": 77.0}, "btn_ev": 0.75246, "bb_ev": 9.24754}, {"bucket": "A", "rate": 0.090157, "strategy": {"c": 59.0, "f": 41.0}, "btn_ev": 1.470826, "bb_ev": 8.529174}, {"bucket": "22", "rate": 0.040614, "strategy": {"c": 12.0, "f": 88.0}, "btn_ev": 0.101345, "bb_ev": 9.898655}, {"bucket": "33", "rate": 0.348717, "strategy": {"c": 14.0, "f": 86.0}, "btn_ev": 0.080684, "bb_ev": 9.919316}, {"bucket": "44", "rate": 0.286176, "strategy": {"c": 1.0, "f": 99.0}, "btn_ev": 0.009475, "bb_ev": 9.990525}, {"bucket": "55", "rate": 0.280303, "strategy": {"c": 1.0, "f": 99.0}, "btn_ev": 0.005892, "bb_ev": 9.994108}, {"bucket": "66", "rate": 0.162996, "strategy": {"c": 1.0, "f": 99.0}, "btn_ev": 0.008612, "bb_ev": 9.991388}, {"bucket": "77", "rate": 0.176581, "strategy": {"c": 8.0, "f": 92.0}, "btn_ev": 0.064906, "bb_ev": 9.935094}, {"bucket": "88", "rate": 2.099354, "strategy": {"c": 0.0, "f": 100.0}, "btn_ev": -1e-05, "bb_ev": 10.00001}, {"bucket": "99", "rate": 0.099296, "strategy": {"c": 0.0, "f": 100.0}, "btn_ev": -0.000367, "bb_ev": 10.000367}, {"bucket": "Str.", "rate": 5.888213, "strategy": {"c": 0.0, "f": 100.0}, "btn_ev": -1.2e-05, "bb_ev": 10.000012}]}}};
+let CUR = DATA.seqItems.length ? DATA.seqItems[0][0] : null;
+
+function setSeq(safeSeq) {
+  CUR = safeSeq;
+  for (const [sid,_] of DATA.seqItems) {
+    const t = document.getElementById('t_' + sid);
+    const p = document.getElementById('p_' + sid);
+    if (t) t.classList.remove('on');
+    if (p) p.classList.remove('on');
+  }
+  const t = document.getElementById('t_' + safeSeq);
+  const p = document.getElementById('p_' + safeSeq);
+  if (t) t.classList.add('on');
+  if (p) p.classList.add('on');
+}
+
+function getActionColorClass(act) {
+  const colors = {
+    k:'color-check', c:'color-call', f:'color-fold', b:'color-bet', r:'color-raise',
+    b40:'color-b40', b80:'color-b80', b120:'color-b120', ba:'color-ba',
+    r86:'color-r86', r111:'color-r111', ra:'color-ra'
+  };
+  if (colors[act]) return colors[act];
+  if (typeof act === 'string') {
+    if (act === 'check' || act === 'k') return 'color-check';
+    if (act === 'call'  || act === 'c') return 'color-call';
+    if (act === 'fold'  || act === 'f') return 'color-fold';
+    if (act[0] === 'b') return 'color-bet';
+    if (act[0] === 'r') return 'color-raise';
+  }
+  return 'color-call';
+}
+
+function getActionLabel(act) {
+  const labels = {
+    k:'Check', c:'Call', f:'Fold', b:'Bet', r:'Raise',
+    b40:'Bet 40%', b80:'Bet 80%', b120:'Bet 120%', ba:'All-in',
+    r86:'Raise 86%', r111:'Raise 111%', ra:'All-in'
+  };
+  if (labels[act]) return labels[act];
+  if (typeof act === 'string') {
+    if (act === 'check') return 'Check';
+    if (act === 'call')  return 'Call';
+    if (act === 'fold')  return 'Fold';
+    if (act === 'bet')   return 'Bet';
+    if (act === 'raise') return 'Raise';
+    if (act === 'ba' || act === 'ra') return 'All-in';
+    if (act[0] === 'b') return 'Bet ' + act.slice(1) + '%';
+    if (act[0] === 'r') return 'Raise ' + act.slice(1) + '%';
+  }
+  return String(act);
+}
+
+function applyEvClass(td, v) {
+  td.classList.remove('ev-positive', 'ev-negative', 'ev-zero');
+  if (v > 0) td.classList.add('ev-positive');
+  else if (v < 0) td.classList.add('ev-negative');
+  else td.classList.add('ev-zero');
+}
+
+function renderOverall(panel, seq) {
+  const overallBar = panel.querySelector('.freq-bar-container');
+  if (!overallBar) return;
+  overallBar.innerHTML = '';
+
+  const actions = seq.actions || [];
+  const overall = seq.overall || {};
+  const count = actions.length;
+
+  if (count === 0) {
+    overallBar.innerHTML = '<div class="freq-bar-segment color-check" style="width:100%;"><span class="freq-label">No data</span><span class="freq-pct">-</span></div>';
+    return;
+  }
+
+  const equalWidth = 100 / count;
+  actions.forEach(function (act) {
+    const pct = Number(overall[act] || 0);
+    const div = document.createElement('div');
+    div.className = 'freq-bar-segment ' + getActionColorClass(act);
+    div.style.width = equalWidth + '%';
+    div.innerHTML = '<span class="freq-label">' + getActionLabel(act) + '</span>' +
+                    '<span class="freq-pct">' + pct.toFixed(1) + '%</span>';
+    overallBar.appendChild(div);
+  });
+}
+
+function renderTable(panel, seq) {
+  const tbody = panel.querySelector('tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  const actions = seq.actions || [];
+  const rows = seq.rows || [];
+
+  rows.forEach(function (r) {
+    if (Number(r.rate || 0) < 0.0001) return;
+
+    const tr = document.createElement('tr');
+    tr.dataset.bucket = r.bucket;
+
+    const tdStrat = document.createElement('td');
+    tdStrat.className = 'col-strategy';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'bucket-strategy-cell';
+
+    const tag = document.createElement('span');
+    tag.className = 'bucket-tag';
+    tag.textContent = r.bucket;
+
+    const barDiv = document.createElement('div');
+    barDiv.className = 'strategy-bar';
+
+    if (r && r.strategy) {
+      actions.forEach(function (act) {
+        const pct = Number(r.strategy[act] || 0);
+        if (pct > 0) {
+          const seg = document.createElement('div');
+          seg.className = 'bar-segment ' + getActionColorClass(act);
+          seg.style.width = pct + '%';
+          seg.title = getActionLabel(act) + ': ' + pct.toFixed(1) + '%';
+          barDiv.appendChild(seg);
+        }
+      });
+    }
+
+    wrap.appendChild(tag);
+    wrap.appendChild(barDiv);
+    tdStrat.appendChild(wrap);
+    tr.appendChild(tdStrat);
+
+    const tdRate = document.createElement('td');
+    tdRate.className = 'col-rate';
+    tdRate.textContent = Number(r.rate || 0).toFixed(2) + '%';
+    tr.appendChild(tdRate);
+
+    const tdBtn = document.createElement('td');
+    tdBtn.className = 'col-ev-btn';
+    if (r.btn_ev !== undefined && r.btn_ev !== null && !Number.isNaN(Number(r.btn_ev))) {
+      const vBtn = Number(r.btn_ev);
+      tdBtn.textContent = vBtn.toFixed(3);
+      applyEvClass(tdBtn, vBtn);
+    } else {
+      tdBtn.textContent = '-';
+      tdBtn.classList.add('ev-zero');
+    }
+    tr.appendChild(tdBtn);
+
+    const tdBb = document.createElement('td');
+    tdBb.className = 'col-ev-bb';
+    if (r.bb_ev !== undefined && r.bb_ev !== null && !Number.isNaN(Number(r.bb_ev))) {
+      const vBb = Number(r.bb_ev);
+      tdBb.textContent = vBb.toFixed(3);
+      applyEvClass(tdBb, vBb);
+    } else {
+      tdBb.textContent = '-';
+      tdBb.classList.add('ev-zero');
+    }
+    tr.appendChild(tdBb);
+
+    tbody.appendChild(tr);
+  });
+}
+
+window.onload = function() {
+  for (const [safe, raw] of DATA.seqItems) {
+    const panel = document.getElementById('p_' + safe);
+    const seq = DATA.sequences[safe];
+    if (!panel || !seq) continue;
+
+    if (seq.terminal) {
+      panel.innerHTML = '<div class="small">Terminal sequence. No strategy.</div>';
+      continue;
+    }
+
+    const metaL = panel.querySelector('.panel-header .left');
+    const metaR = panel.querySelector('.panel-header .right');
+    if (metaL) metaL.textContent = 'Actor: ' + (seq.actor || '?') + ' | Sequence: ' + (raw === '' ? 'Start' : raw);
+    if (metaR) metaR.textContent = 'Actions: ' + (seq.actions || []).map(getActionLabel).join(', ');
+
+    renderOverall(panel, seq);
+    renderTable(panel, seq);
+  }
+
+  if (DATA.seqItems.length) setSeq(DATA.seqItems[0][0]);
+};
+</script></body></html>

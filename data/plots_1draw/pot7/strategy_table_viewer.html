@@ -1,0 +1,353 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>strategy_table 1draw pot7</title><style>
+body{font-family:system-ui,sans-serif;margin:20px;background:#f5f5f5;color:#111}
+h2{text-align:center;color:#222;margin:0 0 14px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tab{padding:8px 14px;cursor:pointer;border:1px solid #ccc;border-radius:10px;background:#eee;font-size:13px;user-select:none}
+.tab.on{background:#fff;font-weight:700;border-color:#bbb;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.panel{display:none;background:#fff;border:1px solid #ddd;border-radius:14px;padding:14px}
+.panel.on{display:block}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap}
+.meta .left{font-size:13px;color:#333}
+.meta .right{font-size:12px;color:#666}
+
+.freqTitle{font-size:11px;font-weight:800;color:#666;text-transform:uppercase;letter-spacing:.4px;margin:4px 0 6px}
+.freqBar{display:flex;width:100%;height:44px;border-radius:10px;overflow:hidden;border:1px solid #ddd;background:#fafafa}
+.seg{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-right:1px solid rgba(0,0,0,.08)}
+.seg:last-child{border-right:none}
+.seg .lbl{font-size:10px;font-weight:800;color:rgba(0,0,0,.7);text-transform:uppercase}
+.seg .pct{font-size:13px;font-weight:700;color:rgba(0,0,0,.85)}
+
+.tableWrap{margin-top:12px;overflow:auto;max-height:72vh;border:1px solid #eee;border-radius:12px}
+table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}
+thead th{position:sticky;top:0;background:#0f3460;color:#ddd;font-size:11px;letter-spacing:.3px;text-transform:uppercase;padding:10px 8px;border-bottom:2px solid #e94560;text-align:center}
+tbody td{padding:8px 8px;border-bottom:1px solid #eee;vertical-align:middle;text-align:center}
+tbody tr:hover td{background:#fafafa}
+
+.colBucket{width:90px;font-weight:800;color:#0f3460}
+.colStrat{width:auto}
+.colRate{width:80px}
+.colEV{width:110px}
+
+.bar{height:18px;border-radius:6px;overflow:hidden;background:rgba(0,0,0,.06);display:flex;margin:0 auto;max-width:520px}
+.segBar{height:100%}
+
+.mono{font-variant-numeric:tabular-nums}
+.small{font-size:11px;color:#666}
+</style></head><body><h2>1DRAW Strategy Table — Pot 7</h2>
+<div class="tabs">
+<div id="t_start" class="tab" onclick="setSeq('start')">Start</div>
+<div id="t_b" class="tab" onclick="setSeq('b')">b</div>
+<div id="t_br" class="tab" onclick="setSeq('br')">br</div>
+<div id="t_brr" class="tab" onclick="setSeq('brr')">brr</div>
+<div id="t_brrr" class="tab" onclick="setSeq('brrr')">brrr</div>
+<div id="t_k" class="tab" onclick="setSeq('k')">k</div>
+<div id="t_kb" class="tab" onclick="setSeq('kb')">kb</div>
+<div id="t_kbr" class="tab" onclick="setSeq('kbr')">kbr</div>
+<div id="t_kbrr" class="tab" onclick="setSeq('kbrr')">kbrr</div>
+<div id="t_kbrrr" class="tab" onclick="setSeq('kbrrr')">kbrrr</div>
+</div>
+<div id="p_start" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_b" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_br" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_brr" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_brrr" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_k" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_kb" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_kbr" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_kbrr" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div id="p_kbrrr" class="panel">
+  <div class="meta"><div class="left"></div><div class="right"></div></div>
+  <div class="freqTitle">Overall Frequency</div>
+  <div class="freqBar"></div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th class="colBucket">Bucket</th>
+        <th class="colStrat">Strategy</th>
+        <th class="colRate">Rate</th>
+        <th class="colEV">BTN EV</th>
+        <th class="colEV">BB EV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<script>
+const DATA = {"seqItems": [["start", ""], ["b", "b"], ["br", "br"], ["brr", "brr"], ["brrr", "brrr"], ["k", "k"], ["kb", "kb"], ["kbr", "kbr"], ["kbrr", "kbrr"], ["kbrrr", "kbrrr"]], "bucketOrder": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Str."], "actionColors": {"k": "#90EE90", "b": "#DC143C", "f": "#87CEEB", "c": "#90EE90", "r": "#DC143C"}, "sequences": {"start": {"terminal": false, "actor": "BB", "actions": ["k", "b"], "overall": {"k": 59.191, "b": 40.809}, "rows": [{"bucket": "75", "rate": 0.5095, "strat": {"k": 68.0, "b": 32.0}, "btn_ev": -1.235465, "bb_ev": 8.235465}, {"bucket": "76", "rate": 1.9105, "strat": {"k": 10.0, "b": 90.0}, "btn_ev": -1.03162, "bb_ev": 8.03162}, {"bucket": "85", "rate": 1.2455, "strat": {"k": 38.0, "b": 62.0}, "btn_ev": -0.773015, "bb_ev": 7.773015}, {"bucket": "86", "rate": 5.43, "strat": {"k": 77.0, "b": 23.0}, "btn_ev": -0.391821, "bb_ev": 7.391821}, {"bucket": "87", "rate": 7.415, "strat": {"k": 6.0, "b": 94.0}, "btn_ev": 0.204182, "bb_ev": 6.795818}, {"bucket": "95", "rate": 0.1775, "strat": {"k": 98.0, "b": 2.0}, "btn_ev": 0.870377, "bb_ev": 6.129623}, {"bucket": "96", "rate": 1.2405, "strat": {"k": 76.0, "b": 24.0}, "btn_ev": 0.949537, "bb_ev": 6.050463}, {"bucket": "97", "rate": 2.983, "strat": {"k": 1.0, "b": 99.0}, "btn_ev": 1.370323, "bb_ev": 5.629677}, {"bucket": "98", "rate": 8.6605, "strat": {"k": 1.0, "b": 99.0}, "btn_ev": 1.555398, "bb_ev": 5.444602}, {"bucket": "T5", "rate": 0.095, "strat": {"k": 100.0, "b": 0.0}, "btn_ev": 2.188414, "bb_ev": 4.811586}, {"bucket": "T6", "rate": 0.6955, "strat": {"k": 100.0, "b": 0.0}, "btn_ev": 2.121615, "bb_ev": 4.878385}, {"bucket": "T7", "rate": 1.584, "strat": {"k": 96.0, "b": 4.0}, "btn_ev": 2.361414, "bb_ev": 4.638586}, {"bucket": "T8", "rate": 4.917, "strat": {"k": 17.0, "b": 83.0}, "btn_ev": 2.479513, "bb_ev": 4.520487}, {"bucket": "T9", "rate": 1.859, "strat": {"k": 2.0, "b": 98.0}, "btn_ev": 2.710003, "bb_ev": 4.289997}, {"bucket": "J8", "rate": 7.255, "strat": {"k": 81.0, "b": 19.0}, "btn_ev": 3.238228, "bb_ev": 3.761772}, {"bucket": "J9", "rate": 1.7765, "strat": {"k": 1.0, "b": 99.0}, "btn_ev": 3.228601, "bb_ev": 3.771399}, {"bucket": "Q", "rate": 9.0085, "strat": {"k": 59.0, "b": 41.0}, "btn_ev": 4.170861, "bb_ev": 2.829139}, {"bucket": "K", "rate": 9.1255, "strat": {"k": 100.0, "b": 0.0}, "btn_ev": 4.850692, "bb_ev": 2.149308}, {"bucket": "A", "rate": 9.1105, "strat": {"k": 100.0, "b": 0.0}, "btn_ev": 5.376001, "bb_ev": 1.623999}, {"bucket": "22", "rate": 2.591, "strat": {"k": 96.0, "b": 4.0}, "btn_ev": 6.521253, "bb_ev": 0.478747}, {"bucket": "33", "rate": 3.2095, "strat": {"k": 98.0, "b": 2.0}, "btn_ev": 6.453558, "bb_ev": 0.546442}, {"bucket": "44", "rate": 2.8095, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 6.510484, "bb_ev": 0.489516}, {"bucket": "55", "rate": 3.345, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 6.520334, "bb_ev": 0.479666}, {"bucket": "66", "rate": 3.308, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 6.614554, "bb_ev": 0.385446}, {"bucket": "77", "rate": 2.184, "strat": {"k": 59.0, "b": 41.0}, "btn_ev": 6.561921, "bb_ev": 0.438079}, {"bucket": "88", "rate": 3.666, "strat": {"k": 74.0, "b": 26.0}, "btn_ev": 6.798433, "bb_ev": 0.201567}, {"bucket": "99", "rate": 1.286, "strat": {"k": 1.0, "b": 99.0}, "btn_ev": 6.952148, "bb_ev": 0.047852}, {"bucket": "Str.", "rate": 2.6025, "strat": {"k": 26.0, "b": 74.0}, "btn_ev": 7.046306, "bb_ev": -0.046306}]}, "b": {"terminal": false, "actor": "BTN", "actions": ["f", "c", "r"], "overall": {"f": 13.7478, "c": 61.1262, "r": 25.0626}, "rows": [{"bucket": "75", "rate": 1.203, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 8.780284, "bb_ev": -0.780284}, {"bucket": "76", "rate": 2.915, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 8.622927, "bb_ev": -0.622927}, {"bucket": "85", "rate": 1.1655, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 8.359006, "bb_ev": -0.359006}, {"bucket": "86", "rate": 4.3595, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 8.004168, "bb_ev": -0.004168}, {"bucket": "87", "rate": 6.917, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 7.135895, "bb_ev": 0.864105}, {"bucket": "95", "rate": 0.4945, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 6.723343, "bb_ev": 1.276657}, {"bucket": "96", "rate": 1.7325, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 6.678547, "bb_ev": 1.321453}, {"bucket": "97", "rate": 4.1105, "strat": {"f": 0.0, "c": 1.0, "r": 99.0}, "btn_ev": 6.245652, "bb_ev": 1.754348}, {"bucket": "98", "rate": 6.751, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 5.496604, "bb_ev": 2.503396}, {"bucket": "T5", "rate": 0.2635, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 5.117644, "bb_ev": 2.882356}, {"bucket": "T6", "rate": 0.9165, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 5.241218, "bb_ev": 2.758782}, {"bucket": "T7", "rate": 2.271, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 5.473845, "bb_ev": 2.526155}, {"bucket": "T8", "rate": 3.815, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 5.007011, "bb_ev": 2.992989}, {"bucket": "T9", "rate": 1.803, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 4.678928, "bb_ev": 3.321072}, {"bucket": "J8", "rate": 7.347, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 4.46788, "bb_ev": 3.53212}, {"bucket": "J9", "rate": 1.778, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 3.924817, "bb_ev": 4.075183}, {"bucket": "Q", "rate": 9.134, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 3.237833, "bb_ev": 4.762167}, {"bucket": "K", "rate": 9.0835, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 2.651351, "bb_ev": 5.348649}, {"bucket": "A", "rate": 9.1445, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 1.826793, "bb_ev": 6.173207}, {"bucket": "22", "rate": 3.5935, "strat": {"f": 2.0, "c": 97.0, "r": 1.0}, "btn_ev": 0.683574, "bb_ev": 7.316426}, {"bucket": "33", "rate": 3.3475, "strat": {"f": 1.0, "c": 98.0, "r": 0.0}, "btn_ev": 0.647498, "bb_ev": 7.352502}, {"bucket": "44", "rate": 3.0955, "strat": {"f": 93.0, "c": 6.0, "r": 1.0}, "btn_ev": 0.055699, "bb_ev": 7.944301}, {"bucket": "55", "rate": 2.9955, "strat": {"f": 77.0, "c": 22.0, "r": 0.0}, "btn_ev": 0.111967, "bb_ev": 7.888033}, {"bucket": "66", "rate": 2.8375, "strat": {"f": 98.0, "c": 2.0, "r": 0.0}, "btn_ev": 0.017542, "bb_ev": 7.982458}, {"bucket": "77", "rate": 2.563, "strat": {"f": 43.0, "c": 54.0, "r": 3.0}, "btn_ev": 0.258707, "bb_ev": 7.741293}, {"bucket": "88", "rate": 2.665, "strat": {"f": 90.0, "c": 0.0, "r": 10.0}, "btn_ev": 0.214681, "bb_ev": 7.785319}, {"bucket": "99", "rate": 1.2745, "strat": {"f": 96.0, "c": 0.0, "r": 4.0}, "btn_ev": 0.09362, "bb_ev": 7.90638}, {"bucket": "Str.", "rate": 2.4235, "strat": {"f": 28.0, "c": 0.0, "r": 72.0}, "btn_ev": 1.565274, "bb_ev": 6.434726}]}, "br": {"terminal": false, "actor": "BB", "actions": ["f", "c", "r"], "overall": {"f": 19.5876, "c": 69.4329, "r": 10.538}, "rows": [{"bucket": "75", "rate": 0.404282, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": -0.418685, "bb_ev": 10.418685}, {"bucket": "76", "rate": 4.222742, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": -0.152194, "bb_ev": 10.152194}, {"bucket": "85", "rate": 1.879119, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 0.135582, "bb_ev": 9.864418}, {"bucket": "86", "rate": 3.073792, "strat": {"f": 0.0, "c": 1.0, "r": 99.0}, "btn_ev": 0.580025, "bb_ev": 9.419975}, {"bucket": "87", "rate": 17.087012, "strat": {"f": 0.0, "c": 99.0, "r": 1.0}, "btn_ev": 1.457452, "bb_ev": 8.542548}, {"bucket": "95", "rate": 0.00889, "strat": {"f": 0.0, "c": 43.0, "r": 56.0}, "btn_ev": 2.102906, "bb_ev": 7.897094}, {"bucket": "96", "rate": 0.717849, "strat": {"f": 0.0, "c": 98.0, "r": 2.0}, "btn_ev": 2.018048, "bb_ev": 7.981952}, {"bucket": "97", "rate": 7.238334, "strat": {"f": 0.0, "c": 99.0, "r": 0.0}, "btn_ev": 2.543373, "bb_ev": 7.456627}, {"bucket": "98", "rate": 20.926339, "strat": {"f": 10.0, "c": 89.0, "r": 0.0}, "btn_ev": 3.587119, "bb_ev": 6.412881}, {"bucket": "T5", "rate": 0.000998, "strat": {"f": 39.0, "c": 19.0, "r": 42.0}, "btn_ev": 6.117487, "bb_ev": 3.882513}, {"bucket": "T6", "rate": 0.006944, "strat": {"f": 48.0, "c": 25.0, "r": 27.0}, "btn_ev": 6.738377, "bb_ev": 3.261623}, {"bucket": "T7", "rate": 0.150419, "strat": {"f": 95.0, "c": 4.0, "r": 0.0}, "btn_ev": 9.689713, "bb_ev": 0.310287}, {"bucket": "T8", "rate": 10.056175, "strat": {"f": 23.0, "c": 76.0, "r": 0.0}, "btn_ev": 5.090178, "bb_ev": 4.909822}, {"bucket": "T9", "rate": 4.465397, "strat": {"f": 1.0, "c": 98.0, "r": 0.0}, "btn_ev": 3.9458, "bb_ev": 6.0542}, {"bucket": "J8", "rate": 3.333148, "strat": {"f": 27.0, "c": 71.0, "r": 3.0}, "btn_ev": 6.023254, "bb_ev": 3.976746}, {"bucket": "J9", "rate": 4.31154, "strat": {"f": 1.0, "c": 98.0, "r": 0.0}, "btn_ev": 5.037785, "bb_ev": 4.962215}, {"bucket": "Q", "rate": 8.975978, "strat": {"f": 20.0, "c": 79.0, "r": 1.0}, "btn_ev": 6.609952, "bb_ev": 3.390048}, {"bucket": "K", "rate": 0.057903, "strat": {"f": 60.0, "c": 23.0, "r": 17.0}, "btn_ev": 8.363298, "bb_ev": 1.636702}, {"bucket": "A", "rate": 0.031776, "strat": {"f": 73.0, "c": 8.0, "r": 19.0}, "btn_ev": 8.764798, "bb_ev": 1.235202}, {"bucket": "22", "rate": 0.249586, "strat": {"f": 45.0, "c": 4.0, "r": 50.0}, "btn_ev": 7.056307, "bb_ev": 2.943693}, {"bucket": "33", "rate": 0.185885, "strat": {"f": 82.0, "c": 1.0, "r": 17.0}, "btn_ev": 9.038191, "bb_ev": 0.961809}, {"bucket": "44", "rate": 0.064254, "strat": {"f": 95.0, "c": 2.0, "r": 2.0}, "btn_ev": 9.85496, "bb_ev": 0.14504}, {"bucket": "55", "rate": 0.072501, "strat": {"f": 97.0, "c": 2.0, "r": 1.0}, "btn_ev": 9.919339, "bb_ev": 0.080661}, {"bucket": "66", "rate": 0.102479, "strat": {"f": 98.0, "c": 1.0, "r": 1.0}, "btn_ev": 9.950434, "bb_ev": 0.049566}, {"bucket": "77", "rate": 2.177351, "strat": {"f": 93.0, "c": 7.0, "r": 0.0}, "btn_ev": 9.973848, "bb_ev": 0.026152}, {"bucket": "88", "rate": 2.37218, "strat": {"f": 93.0, "c": 4.0, "r": 3.0}, "btn_ev": 9.829164, "bb_ev": 0.170836}, {"bucket": "99", "rate": 3.124189, "strat": {"f": 96.0, "c": 0.0, "r": 4.0}, "btn_ev": 9.793133, "bb_ev": 0.206867}, {"bucket": "Str.", "rate": 4.702936, "strat": {"f": 95.0, "c": 0.0, "r": 5.0}, "btn_ev": 9.734733, "bb_ev": 0.265267}]}, "brr": {"terminal": false, "actor": "BTN", "actions": ["f", "c", "r"], "overall": {"f": 16.3779, "c": 65.5797, "r": 17.8751}, "rows": [{"bucket": "75", "rate": 4.775122, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 12.133642, "bb_ev": -0.133642}, {"bucket": "76", "rate": 11.56994, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 11.96217, "bb_ev": 0.03783}, {"bucket": "85", "rate": 4.625009, "strat": {"f": 0.0, "c": 91.0, "r": 9.0}, "btn_ev": 11.751078, "bb_ev": 0.248922}, {"bucket": "86", "rate": 17.294873, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 11.294348, "bb_ev": 0.705652}, {"bucket": "87", "rate": 27.432815, "strat": {"f": 18.0, "c": 82.0, "r": 0.0}, "btn_ev": 8.467402, "bb_ev": 3.532598}, {"bucket": "95", "rate": 1.958192, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 9.787496, "bb_ev": 2.212504}, {"bucket": "96", "rate": 6.857916, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 9.748002, "bb_ev": 2.251998}, {"bucket": "97", "rate": 16.163168, "strat": {"f": 20.0, "c": 79.0, "r": 0.0}, "btn_ev": 7.542692, "bb_ev": 4.457308}, {"bucket": "98", "rate": 0.084711, "strat": {"f": 68.0, "c": 29.0, "r": 2.0}, "btn_ev": 2.856883, "bb_ev": 9.143117}, {"bucket": "T5", "rate": 0.002359, "strat": {"f": 30.0, "c": 68.0, "r": 2.0}, "btn_ev": 5.772924, "bb_ev": 6.227076}, {"bucket": "T6", "rate": 0.008223, "strat": {"f": 25.0, "c": 73.0, "r": 2.0}, "btn_ev": 6.279009, "bb_ev": 5.720991}, {"bucket": "T7", "rate": 0.021005, "strat": {"f": 26.0, "c": 72.0, "r": 2.0}, "btn_ev": 5.937276, "bb_ev": 6.062724}, {"bucket": "T8", "rate": 0.039702, "strat": {"f": 39.0, "c": 59.0, "r": 2.0}, "btn_ev": 4.554509, "bb_ev": 7.445491}, {"bucket": "T9", "rate": 0.015762, "strat": {"f": 84.0, "c": 14.0, "r": 2.0}, "btn_ev": 1.235564, "bb_ev": 10.764436}, {"bucket": "J8", "rate": 0.052243, "strat": {"f": 89.0, "c": 7.0, "r": 4.0}, "btn_ev": 0.863312, "bb_ev": 11.136688}, {"bucket": "J9", "rate": 0.011553, "strat": {"f": 94.0, "c": 5.0, "r": 2.0}, "btn_ev": 0.454895, "bb_ev": 11.545105}, {"bucket": "Q", "rate": 0.064757, "strat": {"f": 96.0, "c": 2.0, "r": 2.0}, "btn_ev": 0.343198, "bb_ev": 11.656802}, {"bucket": "K", "rate": 0.068682, "strat": {"f": 94.0, "c": 2.0, "r": 3.0}, "btn_ev": 0.412233, "bb_ev": 11.587767}, {"bucket": "A", "rate": 0.070572, "strat": {"f": 97.0, "c": 0.0, "r": 2.0}, "btn_ev": 0.263329, "bb_ev": 11.736671}, {"bucket": "22", "rate": 0.100186, "strat": {"f": 78.0, "c": 0.0, "r": 21.0}, "btn_ev": 2.160125, "bb_ev": 9.839875}, {"bucket": "33", "rate": 0.063074, "strat": {"f": 66.0, "c": 3.0, "r": 31.0}, "btn_ev": 3.166516, "bb_ev": 8.833484}, {"bucket": "44", "rate": 0.102207, "strat": {"f": 81.0, "c": 1.0, "r": 18.0}, "btn_ev": 1.891194, "bb_ev": 10.108806}, {"bucket": "55", "rate": 0.040241, "strat": {"f": 47.0, "c": 2.0, "r": 52.0}, "btn_ev": 5.064243, "bb_ev": 6.935757}, {"bucket": "66", "rate": 0.036556, "strat": {"f": 54.0, "c": 2.0, "r": 45.0}, "btn_ev": 4.506682, "bb_ev": 7.493318}, {"bucket": "77", "rate": 0.333183, "strat": {"f": 26.0, "c": 0.0, "r": 73.0}, "btn_ev": 7.181368, "bb_ev": 4.818632}, {"bucket": "88", "rate": 1.066875, "strat": {"f": 100.0, "c": 0.0, "r": 0.0}, "btn_ev": 0.027755, "bb_ev": 11.972245}, {"bucket": "99", "rate": 0.19851, "strat": {"f": 100.0, "c": 0.0, "r": 0.0}, "btn_ev": 0.044105, "bb_ev": 11.955895}, {"bucket": "Str.", "rate": 6.942565, "strat": {"f": 89.0, "c": 0.0, "r": 11.0}, "btn_ev": 1.013957, "bb_ev": 10.986043}]}, "brrr": {"terminal": false, "actor": "BB", "actions": ["f", "c"], "overall": {"f": 12.7352, "c": 87.2648}, "rows": [{"bucket": "75", "rate": 3.80792, "strat": {"f": 0.0, "c": 100.0}, "btn_ev": 0.103126, "bb_ev": 13.896874}, {"bucket": "76", "rate": 39.766299, "strat": {"f": 0.0, "c": 100.0}, "btn_ev": 0.361382, "bb_ev": 13.638618}, {"bucket": "85", "rate": 17.693166, "strat": {"f": 4.0, "c": 96.0}, "btn_ev": 1.158296, "bb_ev": 12.841704}, {"bucket": "86", "rate": 28.663614, "strat": {"f": 9.0, "c": 91.0}, "btn_ev": 2.305368, "bb_ev": 11.694632}, {"bucket": "87", "rate": 0.80733, "strat": {"f": 82.0, "c": 18.0}, "btn_ev": 11.83829, "bb_ev": 2.16171}, {"bucket": "95", "rate": 0.047182, "strat": {"f": 55.0, "c": 45.0}, "btn_ev": 8.865029, "bb_ev": 5.134971}, {"bucket": "96", "rate": 0.129278, "strat": {"f": 73.0, "c": 27.0}, "btn_ev": 10.939339, "bb_ev": 3.060661}, {"bucket": "97", "rate": 0.249687, "strat": {"f": 90.0, "c": 10.0}, "btn_ev": 12.921229, "bb_ev": 1.078771}, {"bucket": "98", "rate": 0.606662, "strat": {"f": 98.0, "c": 2.0}, "btn_ev": 13.777059, "bb_ev": 0.222941}, {"bucket": "T5", "rate": 0.003947, "strat": {"f": 98.0, "c": 2.0}, "btn_ev": 13.776178, "bb_ev": 0.223822}, {"bucket": "T6", "rate": 0.017577, "strat": {"f": 96.0, "c": 4.0}, "btn_ev": 13.620227, "bb_ev": 0.379773}, {"bucket": "T7", "rate": 0.005601, "strat": {"f": 72.0, "c": 28.0}, "btn_ev": 11.402468, "bb_ev": 2.597532}, {"bucket": "T8", "rate": 0.321524, "strat": {"f": 98.0, "c": 2.0}, "btn_ev": 13.774333, "bb_ev": 0.225667}, {"bucket": "T9", "rate": 0.145588, "strat": {"f": 98.0, "c": 2.0}, "btn_ev": 13.812663, "bb_ev": 0.187337}, {"bucket": "J8", "rate": 0.824994, "strat": {"f": 99.0, "c": 1.0}, "btn_ev": 13.912727, "bb_ev": 0.087273}, {"bucket": "J9", "rate": 0.145626, "strat": {"f": 97.0, "c": 3.0}, "btn_ev": 13.808944, "bb_ev": 0.191056}, {"bucket": "Q", "rate": 1.20227, "strat": {"f": 99.0, "c": 1.0}, "btn_ev": 13.925071, "bb_ev": 0.074929}, {"bucket": "K", "rate": 0.093865, "strat": {"f": 96.0, "c": 4.0}, "btn_ev": 13.830537, "bb_ev": 0.169463}, {"bucket": "A", "rate": 0.057045, "strat": {"f": 94.0, "c": 6.0}, "btn_ev": 13.81723, "bb_ev": 0.18277}, {"bucket": "22", "rate": 1.178112, "strat": {"f": 75.0, "c": 25.0}, "btn_ev": 13.681788, "bb_ev": 0.318212}, {"bucket": "33", "rate": 0.29667, "strat": {"f": 92.0, "c": 8.0}, "btn_ev": 13.862916, "bb_ev": 0.137084}, {"bucket": "44", "rate": 0.01426, "strat": {"f": 40.0, "c": 60.0}, "btn_ev": 13.274048, "bb_ev": 0.725952}, {"bucket": "55", "rate": 0.007649, "strat": {"f": 56.0, "c": 44.0}, "btn_ev": 13.389973, "bb_ev": 0.610027}, {"bucket": "66", "rate": 0.007528, "strat": {"f": 77.0, "c": 23.0}, "btn_ev": 13.818075, "bb_ev": 0.181925}, {"bucket": "77", "rate": 0.033125, "strat": {"f": 78.0, "c": 22.0}, "btn_ev": 13.784431, "bb_ev": 0.215569}, {"bucket": "88", "rate": 0.74296, "strat": {"f": 100.0, "c": 0.0}, "btn_ev": 13.999788, "bb_ev": 0.000212}, {"bucket": "99", "rate": 1.132289, "strat": {"f": 100.0, "c": 0.0}, "btn_ev": 14.000374, "bb_ev": -0.000374}, {"bucket": "Str.", "rate": 1.998229, "strat": {"f": 100.0, "c": 0.0}, "btn_ev": 14.000054, "bb_ev": -5.4e-05}]}, "k": {"terminal": false, "actor": "BTN", "actions": ["k", "b"], "overall": {"k": 34.1839, "b": 65.8161}, "rows": [{"bucket": "75", "rate": 1.203, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 8.18011, "bb_ev": -1.18011}, {"bucket": "76", "rate": 2.915, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 7.908413, "bb_ev": -0.908413}, {"bucket": "85", "rate": 1.1655, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 7.811039, "bb_ev": -0.811039}, {"bucket": "86", "rate": 4.3595, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 7.338713, "bb_ev": -0.338713}, {"bucket": "87", "rate": 6.917, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 6.980082, "bb_ev": 0.019918}, {"bucket": "95", "rate": 0.4945, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 6.027506, "bb_ev": 0.972494}, {"bucket": "96", "rate": 1.7325, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 6.111798, "bb_ev": 0.888202}, {"bucket": "97", "rate": 4.1105, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 5.9681, "bb_ev": 1.0319}, {"bucket": "98", "rate": 6.751, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 5.324879, "bb_ev": 1.675121}, {"bucket": "T5", "rate": 0.2635, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 5.001718, "bb_ev": 1.998282}, {"bucket": "T6", "rate": 0.9165, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 5.123104, "bb_ev": 1.876896}, {"bucket": "T7", "rate": 2.271, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 4.76356, "bb_ev": 2.23644}, {"bucket": "T8", "rate": 3.815, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 4.598143, "bb_ev": 2.401857}, {"bucket": "T9", "rate": 1.803, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 4.540385, "bb_ev": 2.459615}, {"bucket": "J8", "rate": 7.347, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 3.543646, "bb_ev": 3.456354}, {"bucket": "J9", "rate": 1.778, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 3.59654, "bb_ev": 3.40346}, {"bucket": "Q", "rate": 9.134, "strat": {"k": 1.0, "b": 99.0}, "btn_ev": 2.976338, "bb_ev": 4.023662}, {"bucket": "K", "rate": 9.0835, "strat": {"k": 100.0, "b": 0.0}, "btn_ev": 2.855677, "bb_ev": 4.144323}, {"bucket": "A", "rate": 9.1445, "strat": {"k": 100.0, "b": 0.0}, "btn_ev": 1.881512, "bb_ev": 5.118488}, {"bucket": "22", "rate": 3.5935, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 1.419525, "bb_ev": 5.580475}, {"bucket": "33", "rate": 3.3475, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 1.453954, "bb_ev": 5.546046}, {"bucket": "44", "rate": 3.0955, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 1.24085, "bb_ev": 5.75915}, {"bucket": "55", "rate": 2.9955, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 1.14997, "bb_ev": 5.85003}, {"bucket": "66", "rate": 2.8375, "strat": {"k": 99.0, "b": 1.0}, "btn_ev": 1.02404, "bb_ev": 5.97596}, {"bucket": "77", "rate": 2.563, "strat": {"k": 6.0, "b": 94.0}, "btn_ev": 0.771267, "bb_ev": 6.228733}, {"bucket": "88", "rate": 2.665, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 0.490022, "bb_ev": 6.509978}, {"bucket": "99", "rate": 1.2745, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 0.358036, "bb_ev": 6.641964}, {"bucket": "Str.", "rate": 2.4235, "strat": {"k": 0.0, "b": 100.0}, "btn_ev": 0.738179, "bb_ev": 6.261821}]}, "kb": {"terminal": false, "actor": "BB", "actions": ["f", "c", "r"], "overall": {"f": 23.5032, "c": 63.7267, "r": 12.6142}, "rows": [{"bucket": "75", "rate": 0.582091, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": -0.660506, "bb_ev": 8.660506}, {"bucket": "76", "rate": 0.315256, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": -0.38249, "bb_ev": 8.38249}, {"bucket": "85", "rate": 0.808359, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": -0.104736, "bb_ev": 8.104736}, {"bucket": "86", "rate": 7.055577, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 0.263805, "bb_ev": 7.736195}, {"bucket": "87", "rate": 0.74216, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 1.342294, "bb_ev": 6.657706}, {"bucket": "95", "rate": 0.293826, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 1.528062, "bb_ev": 6.471938}, {"bucket": "96", "rate": 1.601083, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 1.913248, "bb_ev": 6.086752}, {"bucket": "97", "rate": 0.047193, "strat": {"f": 0.0, "c": 6.0, "r": 94.0}, "btn_ev": 2.126281, "bb_ev": 5.873719}, {"bucket": "98", "rate": 0.198147, "strat": {"f": 1.0, "c": 98.0, "r": 2.0}, "btn_ev": 2.256604, "bb_ev": 5.743396}, {"bucket": "T5", "rate": 0.159853, "strat": {"f": 0.0, "c": 99.0, "r": 0.0}, "btn_ev": 3.028836, "bb_ev": 4.971164}, {"bucket": "T6", "rate": 1.170543, "strat": {"f": 0.0, "c": 99.0, "r": 0.0}, "btn_ev": 2.743781, "bb_ev": 5.256219}, {"bucket": "T7", "rate": 2.573045, "strat": {"f": 0.0, "c": 99.0, "r": 1.0}, "btn_ev": 3.044565, "bb_ev": 4.955435}, {"bucket": "T8", "rate": 1.37142, "strat": {"f": 0.0, "c": 99.0, "r": 0.0}, "btn_ev": 3.141388, "bb_ev": 4.858612}, {"bucket": "T9", "rate": 0.060814, "strat": {"f": 0.0, "c": 98.0, "r": 2.0}, "btn_ev": 3.016782, "bb_ev": 4.983218}, {"bucket": "J8", "rate": 9.960734, "strat": {"f": 0.0, "c": 99.0, "r": 1.0}, "btn_ev": 3.775751, "bb_ev": 4.224249}, {"bucket": "J9", "rate": 0.027545, "strat": {"f": 1.0, "c": 95.0, "r": 4.0}, "btn_ev": 4.127632, "bb_ev": 3.872368}, {"bucket": "Q", "rate": 9.030937, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 4.914186, "bb_ev": 3.085814}, {"bucket": "K", "rate": 15.381347, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 5.189765, "bb_ev": 2.810235}, {"bucket": "A", "rate": 15.374023, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 6.36844, "bb_ev": 1.63156}, {"bucket": "22", "rate": 4.20637, "strat": {"f": 1.0, "c": 88.0, "r": 11.0}, "btn_ev": 7.328953, "bb_ev": 0.671047}, {"bucket": "33", "rate": 5.295529, "strat": {"f": 6.0, "c": 89.0, "r": 4.0}, "btn_ev": 7.702099, "bb_ev": 0.297901}, {"bucket": "44", "rate": 4.703479, "strat": {"f": 96.0, "c": 1.0, "r": 3.0}, "btn_ev": 7.935299, "bb_ev": 0.064701}, {"bucket": "55", "rate": 5.602738, "strat": {"f": 94.0, "c": 4.0, "r": 1.0}, "btn_ev": 7.959793, "bb_ev": 0.040207}, {"bucket": "66", "rate": 5.519528, "strat": {"f": 94.0, "c": 4.0, "r": 2.0}, "btn_ev": 7.956152, "bb_ev": 0.043848}, {"bucket": "77", "rate": 2.188587, "strat": {"f": 96.0, "c": 3.0, "r": 0.0}, "btn_ev": 7.987437, "bb_ev": 0.012563}, {"bucket": "88", "rate": 4.558623, "strat": {"f": 100.0, "c": 0.0, "r": 0.0}, "btn_ev": 7.993759, "bb_ev": 0.006241}, {"bucket": "99", "rate": 0.017811, "strat": {"f": 99.0, "c": 0.0, "r": 1.0}, "btn_ev": 7.984228, "bb_ev": 0.015772}, {"bucket": "Str.", "rate": 1.153383, "strat": {"f": 95.0, "c": 0.0, "r": 5.0}, "btn_ev": 7.872182, "bb_ev": 0.127818}]}, "kbr": {"terminal": false, "actor": "BTN", "actions": ["f", "c", "r"], "overall": {"f": 19.9456, "c": 67.348, "r": 12.695}, "rows": [{"bucket": "75", "rate": 1.830729, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 10.268802, "bb_ev": -0.268802}, {"bucket": "76", "rate": 4.435461, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 10.122144, "bb_ev": -0.122144}, {"bucket": "85", "rate": 1.773351, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 9.876562, "bb_ev": 0.123438}, {"bucket": "86", "rate": 6.627927, "strat": {"f": 0.0, "c": 43.0, "r": 57.0}, "btn_ev": 9.442553, "bb_ev": 0.557447}, {"bucket": "87", "rate": 10.49884, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 8.962537, "bb_ev": 1.037463}, {"bucket": "95", "rate": 0.750339, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 7.94625, "bb_ev": 2.05375}, {"bucket": "96", "rate": 2.627964, "strat": {"f": 0.0, "c": 99.0, "r": 0.0}, "btn_ev": 7.960509, "bb_ev": 2.039491}, {"bucket": "97", "rate": 6.233229, "strat": {"f": 2.0, "c": 97.0, "r": 0.0}, "btn_ev": 7.859212, "bb_ev": 2.140788}, {"bucket": "98", "rate": 10.237323, "strat": {"f": 10.0, "c": 90.0, "r": 0.0}, "btn_ev": 6.28054, "bb_ev": 3.71946}, {"bucket": "T5", "rate": 0.399632, "strat": {"f": 99.0, "c": 1.0, "r": 0.0}, "btn_ev": 0.071267, "bb_ev": 9.928733}, {"bucket": "T6", "rate": 1.389948, "strat": {"f": 99.0, "c": 1.0, "r": 0.0}, "btn_ev": 0.086933, "bb_ev": 9.913067}, {"bucket": "T7", "rate": 3.442491, "strat": {"f": 1.0, "c": 98.0, "r": 0.0}, "btn_ev": 6.669218, "bb_ev": 3.330782}, {"bucket": "T8", "rate": 5.782228, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 6.133205, "bb_ev": 3.866795}, {"bucket": "T9", "rate": 2.73382, "strat": {"f": 81.0, "c": 19.0, "r": 0.0}, "btn_ev": 1.092924, "bb_ev": 8.907076}, {"bucket": "J8", "rate": 11.128206, "strat": {"f": 1.0, "c": 99.0, "r": 0.0}, "btn_ev": 5.37558, "bb_ev": 4.62442}, {"bucket": "J9", "rate": 2.69393, "strat": {"f": 60.0, "c": 39.0, "r": 0.0}, "btn_ev": 2.076755, "bb_ev": 7.923245}, {"bucket": "Q", "rate": 13.816822, "strat": {"f": 1.0, "c": 99.0, "r": 1.0}, "btn_ev": 3.734836, "bb_ev": 6.265164}, {"bucket": "K", "rate": 0.065255, "strat": {"f": 96.0, "c": 2.0, "r": 2.0}, "btn_ev": 0.186536, "bb_ev": 9.813464}, {"bucket": "A", "rate": 0.024763, "strat": {"f": 91.0, "c": 5.0, "r": 3.0}, "btn_ev": 0.366956, "bb_ev": 9.633044}, {"bucket": "22", "rate": 0.072691, "strat": {"f": 94.0, "c": 1.0, "r": 6.0}, "btn_ev": 0.417411, "bb_ev": 9.582589}, {"bucket": "33", "rate": 0.042209, "strat": {"f": 95.0, "c": 1.0, "r": 4.0}, "btn_ev": 0.29838, "bb_ev": 9.70162}, {"bucket": "44", "rate": 0.033766, "strat": {"f": 79.0, "c": 2.0, "r": 19.0}, "btn_ev": 1.363126, "bb_ev": 8.636874}, {"bucket": "55", "rate": 0.033572, "strat": {"f": 73.0, "c": 2.0, "r": 25.0}, "btn_ev": 1.833436, "bb_ev": 8.166564}, {"bucket": "66", "rate": 0.035724, "strat": {"f": 75.0, "c": 2.0, "r": 23.0}, "btn_ev": 1.641922, "bb_ev": 8.358078}, {"bucket": "77", "rate": 3.653485, "strat": {"f": 100.0, "c": 0.0, "r": 0.0}, "btn_ev": 0.022507, "bb_ev": 9.977493}, {"bucket": "88", "rate": 4.035446, "strat": {"f": 97.0, "c": 0.0, "r": 3.0}, "btn_ev": 0.238566, "bb_ev": 9.761434}, {"bucket": "99", "rate": 1.930676, "strat": {"f": 100.0, "c": 0.0, "r": 0.0}, "btn_ev": 0.034078, "bb_ev": 9.965922}, {"bucket": "Str.", "rate": 3.670173, "strat": {"f": 84.0, "c": 0.0, "r": 16.0}, "btn_ev": 1.119649, "bb_ev": 8.880351}]}, "kbrr": {"terminal": false, "actor": "BB", "actions": ["f", "c", "r"], "overall": {"f": 15.4311, "c": 76.8625, "r": 7.693}, "rows": [{"bucket": "75", "rate": 4.585796, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": -0.175986, "bb_ev": 12.175986}, {"bucket": "76", "rate": 2.482869, "strat": {"f": 0.0, "c": 0.0, "r": 100.0}, "btn_ev": 0.098112, "bb_ev": 11.901888}, {"bucket": "85", "rate": 6.365588, "strat": {"f": 0.0, "c": 97.0, "r": 3.0}, "btn_ev": 0.565055, "bb_ev": 11.434945}, {"bucket": "86", "rate": 55.543813, "strat": {"f": 0.0, "c": 100.0, "r": 0.0}, "btn_ev": 0.941529, "bb_ev": 11.058471}, {"bucket": "87", "rate": 5.831426, "strat": {"f": 74.0, "c": 26.0, "r": 0.0}, "btn_ev": 9.300494, "bb_ev": 2.699506}, {"bucket": "95", "rate": 2.309624, "strat": {"f": 2.0, "c": 98.0, "r": 0.0}, "btn_ev": 2.227767, "bb_ev": 9.772233}, {"bucket": "96", "rate": 12.587273, "strat": {"f": 12.0, "c": 88.0, "r": 0.0}, "btn_ev": 3.721687, "bb_ev": 8.278313}, {"bucket": "97", "rate": 0.347656, "strat": {"f": 82.0, "c": 18.0, "r": 0.0}, "btn_ev": 10.282199, "bb_ev": 1.717801}, {"bucket": "98", "rate": 0.029117, "strat": {"f": 32.0, "c": 64.0, "r": 4.0}, "btn_ev": 6.118142, "bb_ev": 5.881858}, {"bucket": "T5", "rate": 0.004716, "strat": {"f": 95.0, "c": 4.0, "r": 0.0}, "btn_ev": 11.627705, "bb_ev": 0.372295}, {"bucket": "T6", "rate": 0.043402, "strat": {"f": 93.0, "c": 7.0, "r": 0.0}, "btn_ev": 11.413416, "bb_ev": 0.586584}, {"bucket": "T7", "rate": 0.22613, "strat": {"f": 93.0, "c": 7.0, "r": 0.0}, "btn_ev": 11.409122, "bb_ev": 0.590878}, {"bucket": "T8", "rate": 0.052691, "strat": {"f": 80.0, "c": 18.0, "r": 1.0}, "btn_ev": 10.545597, "bb_ev": 1.454403}, {"bucket": "T9", "rate": 0.008745, "strat": {"f": 55.0, "c": 42.0, "r": 3.0}, "btn_ev": 8.577031, "bb_ev": 3.422969}, {"bucket": "J8", "rate": 0.401422, "strat": {"f": 92.0, "c": 8.0, "r": 1.0}, "btn_ev": 11.455891, "bb_ev": 0.544109}, {"bucket": "J9", "rate": 0.008774, "strat": {"f": 85.0, "c": 12.0, "r": 3.0}, "btn_ev": 10.912025, "bb_ev": 1.087975}, {"bucket": "Q", "rate": 0.233103, "strat": {"f": 96.0, "c": 3.0, "r": 1.0}, "btn_ev": 11.767418, "bb_ev": 0.232582}, {"bucket": "K", "rate": 0.249339, "strat": {"f": 97.0, "c": 2.0, "r": 1.0}, "btn_ev": 11.813368, "bb_ev": 0.186632}, {"bucket": "A", "rate": 0.252459, "strat": {"f": 95.0, "c": 4.0, "r": 1.0}, "btn_ev": 11.783511, "bb_ev": 0.216489}, {"bucket": "22", "rate": 3.625944, "strat": {"f": 88.0, "c": 2.0, "r": 10.0}, "btn_ev": 11.111616, "bb_ev": 0.888384}, {"bucket": "33", "rate": 1.729734, "strat": {"f": 99.0, "c": 0.0, "r": 0.0}, "btn_ev": 11.958801, "bb_ev": 0.041199}, {"bucket": "44", "rate": 1.040054, "strat": {"f": 99.0, "c": 1.0, "r": 0.0}, "btn_ev": 11.959969, "bb_ev": 0.040031}, {"bucket": "55", "rate": 0.567478, "strat": {"f": 97.0, "c": 2.0, "r": 1.0}, "btn_ev": 11.895803, "bb_ev": 0.104197}, {"bucket": "66", "rate": 0.832717, "strat": {"f": 95.0, "c": 2.0, "r": 3.0}, "btn_ev": 11.702448, "bb_ev": 0.297552}, {"bucket": "77", "rate": 0.047529, "strat": {"f": 51.0, "c": 17.0, "r": 33.0}, "btn_ev": 9.068137, "bb_ev": 2.931863}, {"bucket": "88", "rate": 0.104048, "strat": {"f": 99.0, "c": 0.0, "r": 1.0}, "btn_ev": 11.92933, "bb_ev": 0.07067}, {"bucket": "99", "rate": 0.001068, "strat": {"f": 93.0, "c": 1.0, "r": 6.0}, "btn_ev": 11.519953, "bb_ev": 0.480047}, {"bucket": "Str.", "rate": 0.487486, "strat": {"f": 98.0, "c": 0.0, "r": 2.0}, "btn_ev": 11.850653, "bb_ev": 0.149347}]}, "kbrrr": {"terminal": false, "actor": "BTN", "actions": ["f", "c"], "overall": {"f": 12.5884, "c": 87.4116}, "rows": [{"bucket": "75", "rate": 14.212631, "strat": {"f": 0.0, "c": 100.0}, "btn_ev": 13.915625, "bb_ev": 0.084375}, {"bucket": "76", "rate": 34.428724, "strat": {"f": 0.0, "c": 100.0}, "btn_ev": 13.792293, "bb_ev": 0.207707}, {"bucket": "85", "rate": 13.764382, "strat": {"f": 23.0, "c": 77.0}, "btn_ev": 10.49775, "bb_ev": 3.50225}, {"bucket": "86", "rate": 29.343705, "strat": {"f": 5.0, "c": 95.0}, "btn_ev": 12.550719, "bb_ev": 1.449281}, {"bucket": "87", "rate": 0.240403, "strat": {"f": 71.0, "c": 29.0}, "btn_ev": 3.545078, "bb_ev": 10.454922}, {"bucket": "95", "rate": 0.019499, "strat": {"f": 87.0, "c": 13.0}, "btn_ev": 1.447967, "bb_ev": 12.552033}, {"bucket": "96", "rate": 0.078833, "strat": {"f": 91.0, "c": 9.0}, "btn_ev": 1.058601, "bb_ev": 12.941399}, {"bucket": "97", "rate": 0.182794, "strat": {"f": 90.0, "c": 10.0}, "btn_ev": 1.060857, "bb_ev": 12.939143}, {"bucket": "98", "rate": 0.297533, "strat": {"f": 95.0, "c": 5.0}, "btn_ev": 0.564704, "bb_ev": 13.435296}, {"bucket": "T5", "rate": 0.010163, "strat": {"f": 97.0, "c": 3.0}, "btn_ev": 0.259144, "bb_ev": 13.740856}, {"bucket": "T6", "rate": 0.036796, "strat": {"f": 98.0, "c": 2.0}, "btn_ev": 0.207004, "bb_ev": 13.792996}, {"bucket": "T7", "rate": 0.11067, "strat": {"f": 89.0, "c": 11.0}, "btn_ev": 0.98147, "bb_ev": 13.01853}, {"bucket": "T8", "rate": 0.196905, "strat": {"f": 94.0, "c": 6.0}, "btn_ev": 0.513908, "bb_ev": 13.486092}, {"bucket": "T9", "rate": 0.070715, "strat": {"f": 95.0, "c": 5.0}, "btn_ev": 0.427573, "bb_ev": 13.572427}, {"bucket": "J8", "rate": 0.396125, "strat": {"f": 87.0, "c": 13.0}, "btn_ev": 0.971782, "bb_ev": 13.028218}, {"bucket": "J9", "rate": 0.073006, "strat": {"f": 97.0, "c": 3.0}, "btn_ev": 0.260936, "bb_ev": 13.739064}, {"bucket": "Q", "rate": 0.538622, "strat": {"f": 90.0, "c": 10.0}, "btn_ev": 0.661472, "bb_ev": 13.338528}, {"bucket": "K", "rate": 0.008643, "strat": {"f": 78.0, "c": 22.0}, "btn_ev": 1.067279, "bb_ev": 12.932721}, {"bucket": "A", "rate": 0.006527, "strat": {"f": 37.0, "c": 63.0}, "btn_ev": 2.395381, "bb_ev": 11.604619}, {"bucket": "22", "rate": 0.031823, "strat": {"f": 66.0, "c": 34.0}, "btn_ev": 0.503728, "bb_ev": 13.496272}, {"bucket": "33", "rate": 0.013214, "strat": {"f": 46.0, "c": 54.0}, "btn_ev": 0.634651, "bb_ev": 13.365349}, {"bucket": "44", "rate": 0.049655, "strat": {"f": 83.0, "c": 17.0}, "btn_ev": 0.251791, "bb_ev": 13.748209}, {"bucket": "55", "rate": 0.065877, "strat": {"f": 89.0, "c": 11.0}, "btn_ev": 0.159967, "bb_ev": 13.840033}, {"bucket": "66", "rate": 0.062585, "strat": {"f": 96.0, "c": 4.0}, "btn_ev": 0.055396, "bb_ev": 13.944604}, {"bucket": "77", "rate": 0.088262, "strat": {"f": 95.0, "c": 5.0}, "btn_ev": 0.076367, "bb_ev": 13.923633}, {"bucket": "88", "rate": 1.063729, "strat": {"f": 100.0, "c": 0.0}, "btn_ev": 0.000198, "bb_ev": 13.999802}, {"bucket": "99", "rate": 0.069516, "strat": {"f": 100.0, "c": 0.0}, "btn_ev": -0.000281, "bb_ev": 14.000281}, {"bucket": "Str.", "rate": 4.538663, "strat": {"f": 100.0, "c": 0.0}, "btn_ev": -1e-05, "bb_ev": 14.00001}]}}};
+let CUR = DATA.seqItems.length ? DATA.seqItems[0][0] : null;
+
+function setSeq(safeSeq){
+  CUR = safeSeq;
+  for (const [sid,_] of DATA.seqItems){
+    const t = document.getElementById('t_' + sid);
+    const p = document.getElementById('p_' + sid);
+    if(t) t.classList.remove('on');
+    if(p) p.classList.remove('on');
+  }
+  const t = document.getElementById('t_' + safeSeq);
+  const p = document.getElementById('p_' + safeSeq);
+  if(t) t.classList.add('on');
+  if(p) p.classList.add('on');
+}
+
+function fmtPct(x) {
+  if(x === null || x === undefined || isNaN(x)) return '-';
+  return (Math.round(x*10)/10).toFixed(1) + '%';
+}
+
+function fmtNum(x) {
+  if(x === null || x === undefined || isNaN(x)) return '-';
+  return (Math.round(x*1000)/1000).toFixed(3);
+}
+
+function actionLabel(a){
+  const map = {k:'Check', b:'Bet', c:'Call', f:'Fold', r:'Raise'};
+  if(map[a]) return map[a];
+  if(a.startsWith('b')) return (a === 'ba') ? 'Bet All-in' : ('Bet ' + a.slice(1));
+  if(a.startsWith('r')) return (a === 'ra') ? 'Raise All-in' : ('Raise ' + a.slice(1));
+  return a.toUpperCase();
+}
+
+function renderOverall(panel, seq){
+  const bar = panel.querySelector('.freqBar');
+  if(!bar) return;
+  bar.innerHTML = '';
+  const acts = seq.actions || [];
+  const overall = seq.overall || {};
+
+  if(!acts.length){
+    bar.innerHTML = '<div class="seg" style="width:100%"><div class="lbl">No data</div><div class="pct">-</div></div>';
+    return;
+  }
+
+  const w = 100 / acts.length;
+  for(const a of acts){
+    const pct = overall[a] ?? 0;
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.style.width = w + '%';
+    seg.style.background = (DATA.actionColors[a] || '#ddd');
+    seg.innerHTML = `<div class="lbl">${actionLabel(a)}</div><div class="pct">${(Math.round(pct*10)/10).toFixed(1)}%</div>`;
+    bar.appendChild(seg);
+  }
+}
+
+function renderTable(panel, seq){
+  const tb = panel.querySelector('tbody');
+  tb.innerHTML = '';
+  const acts = seq.actions || [];
+  const rows = seq.rows || [];
+
+  for(const r of rows){
+    const tr = document.createElement('tr');
+
+    const tdB = document.createElement('td');
+    tdB.className = 'colBucket';
+    tdB.textContent = r.bucket;
+    tr.appendChild(tdB);
+
+    const tdS = document.createElement('td');
+    tdS.className = 'colStrat';
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+
+    for(const a of acts){
+      const pct = (r.strat && r.strat[a]) ? r.strat[a] : 0;
+      if(pct <= 0) continue;
+      const seg = document.createElement('div');
+      seg.className = 'segBar';
+      seg.style.width = pct + '%';
+      seg.style.background = (DATA.actionColors[a] || '#999');
+      seg.title = actionLabel(a) + ': ' + pct.toFixed(1) + '%';
+      bar.appendChild(seg);
+    }
+
+    tdS.appendChild(bar);
+    tr.appendChild(tdS);
+
+    const tdR = document.createElement('td');
+    tdR.className = 'colRate mono';
+    tdR.textContent = fmtPct(r.rate);
+    tr.appendChild(tdR);
+
+    const tdE0 = document.createElement('td');
+    tdE0.className = 'colEV mono';
+    tdE0.textContent = fmtNum(r.btn_ev);
+    tr.appendChild(tdE0);
+
+    const tdE1 = document.createElement('td');
+    tdE1.className = 'colEV mono';
+    tdE1.textContent = fmtNum(r.bb_ev);
+    tr.appendChild(tdE1);
+
+    tb.appendChild(tr);
+  }
+}
+
+window.onload = function(){
+  for(const [safe, raw] of DATA.seqItems){
+    const panel = document.getElementById('p_' + safe);
+    const seq = DATA.sequences[safe];
+    if(!panel || !seq) continue;
+
+    if(seq.terminal){
+      panel.innerHTML = '<div class="small">Terminal sequence. No strategy.</div>';
+      continue;
+    }
+
+    const metaL = panel.querySelector('.meta .left');
+    const metaR = panel.querySelector('.meta .right');
+    if(metaL) metaL.textContent = 'Actor: ' + (seq.actor || '?') + ' | Sequence: ' + (raw === '' ? 'Start' : raw);
+    if(metaR) metaR.textContent = 'Actions: ' + (seq.actions || []).join(', ');
+
+    renderOverall(panel, seq);
+    renderTable(panel, seq);
+  }
+
+  if(DATA.seqItems.length) setSeq(DATA.seqItems[0][0]);
+};
+</script></body></html>

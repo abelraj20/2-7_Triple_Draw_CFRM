@@ -1,0 +1,372 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>regret nl pot5</title><style>
+body{font-family:system-ui,sans-serif;margin:20px;background:#f5f5f5}
+h2{text-align:center;color:#222;margin:0 0 14px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tab{padding:8px 14px;cursor:pointer;border:1px solid #ccc;border-radius:10px;background:#eee;font-size:13px;user-select:none}
+.tab.on{background:#fff;font-weight:700;border-color:#bbb;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.panel{display:none;background:#fff;border:1px solid #ddd;border-radius:14px;padding:14px}
+.panel.on{display:block}
+.nav{display:flex;justify-content:center;align-items:center;gap:10px;margin:6px 0 10px}
+.navBtn{cursor:pointer;padding:6px 12px;background:#fff;border:1px solid #ccc;border-radius:10px;font-size:16px;user-select:none}
+.navBtn:hover{background:#eee}
+.navLbl{font-size:13px;color:#333;min-width:220px;text-align:center}
+.imgWrap{text-align:center}
+.imgWrap img{max-width:100%;border-radius:10px;border:1px solid #eee}
+.note{font-size:12px;color:#666;margin-top:8px;text-align:center}
+</style></head><body><h2>NL Regret — Pot 5</h2>
+<div class="tabs">
+<div id="t_start" class="tab" onclick="setSeq('start')">Start</div>
+<div id="t_b120" class="tab" onclick="setSeq('b120')">b120</div>
+<div id="t_b120ra" class="tab" onclick="setSeq('b120ra')">b120ra</div>
+<div id="t_b40" class="tab" onclick="setSeq('b40')">b40</div>
+<div id="t_b40r86" class="tab" onclick="setSeq('b40r86')">b40r86</div>
+<div id="t_b40r86ra" class="tab" onclick="setSeq('b40r86ra')">b40r86ra</div>
+<div id="t_b40ra" class="tab" onclick="setSeq('b40ra')">b40ra</div>
+<div id="t_b80" class="tab" onclick="setSeq('b80')">b80</div>
+<div id="t_b80r111" class="tab" onclick="setSeq('b80r111')">b80r111</div>
+<div id="t_b80r111ra" class="tab" onclick="setSeq('b80r111ra')">b80r111ra</div>
+<div id="t_b80ra" class="tab" onclick="setSeq('b80ra')">b80ra</div>
+<div id="t_ba" class="tab" onclick="setSeq('ba')">ba</div>
+<div id="t_k" class="tab" onclick="setSeq('k')">k</div>
+<div id="t_kb120" class="tab" onclick="setSeq('kb120')">kb120</div>
+<div id="t_kb120ra" class="tab" onclick="setSeq('kb120ra')">kb120ra</div>
+<div id="t_kb40" class="tab" onclick="setSeq('kb40')">kb40</div>
+<div id="t_kb40r86" class="tab" onclick="setSeq('kb40r86')">kb40r86</div>
+<div id="t_kb40r86ra" class="tab" onclick="setSeq('kb40r86ra')">kb40r86ra</div>
+<div id="t_kb40ra" class="tab" onclick="setSeq('kb40ra')">kb40ra</div>
+<div id="t_kb80" class="tab" onclick="setSeq('kb80')">kb80</div>
+<div id="t_kb80r111" class="tab" onclick="setSeq('kb80r111')">kb80r111</div>
+<div id="t_kb80r111ra" class="tab" onclick="setSeq('kb80r111ra')">kb80r111ra</div>
+<div id="t_kb80ra" class="tab" onclick="setSeq('kb80ra')">kb80ra</div>
+<div id="t_kba" class="tab" onclick="setSeq('kba')">kba</div>
+</div>
+<div id="p_start" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_start_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: Start (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b120" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b120_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b120 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b120ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b120ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b120ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b40" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b40_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b40 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b40r86" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b40r86_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b40r86 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b40r86ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b40r86ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b40r86ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b40ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b40ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b40ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b80" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b80_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b80 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b80r111" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b80r111_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b80r111 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b80r111ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b80r111ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b80r111ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b80ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_b80ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b80ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_ba" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_ba_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: ba (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_k" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_k_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: k (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb120" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb120_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb120 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb120ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb120ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb120ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb40" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb40_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb40 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb40r86" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb40r86_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb40r86 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb40r86ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb40r86ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb40r86ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb40ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb40ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb40ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb80" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb80_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb80 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb80r111" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb80r111_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb80r111 (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb80r111ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb80r111ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb80r111ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb80ra" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kb80ra_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb80ra (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kba" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/35)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="regret/seq_kba_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kba (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<script>
+const SEQS = [["start", ""], ["b120", "b120"], ["b120ra", "b120ra"], ["b40", "b40"], ["b40r86", "b40r86"], ["b40r86ra", "b40r86ra"], ["b40ra", "b40ra"], ["b80", "b80"], ["b80r111", "b80r111"], ["b80r111ra", "b80r111ra"], ["b80ra", "b80ra"], ["ba", "ba"], ["k", "k"], ["kb120", "kb120"], ["kb120ra", "kb120ra"], ["kb40", "kb40"], ["kb40r86", "kb40r86"], ["kb40r86ra", "kb40r86ra"], ["kb40ra", "kb40ra"], ["kb80", "kb80"], ["kb80r111", "kb80r111"], ["kb80r111ra", "kb80r111ra"], ["kb80ra", "kb80ra"], ["kba", "kba"]];
+const BUCKETS = {"start": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b120": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b120ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b40": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b40r86": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b40r86ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b40ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b80": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b80r111": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b80r111ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "b80ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "ba": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "k": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb120": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb120ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb40": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb40r86": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb40r86ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb40ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb80": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb80r111": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb80r111ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kb80ra": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"], "kba": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA", "2-Pair", "Str.", "Trips"]};
+let CUR = SEQS.length ? SEQS[0][0] : null;
+
+function setSeq(safeSeq) {
+  CUR = safeSeq;
+  for (const [sid,_] of SEQS) {
+    const t = document.getElementById('t_' + sid);
+    const p = document.getElementById('p_' + sid);
+    if (t) t.classList.remove('on');
+    if (p) p.classList.remove('on');
+  }
+  const t = document.getElementById('t_' + safeSeq);
+  const p = document.getElementById('p_' + safeSeq);
+  if (t) t.classList.add('on');
+  if (p) p.classList.add('on');
+
+  const bs = BUCKETS[safeSeq] || [];
+  if (bs.length) setBucketIdx(safeSeq, 0);
+}
+
+function setBucketIdx(safeSeq, idx) {
+  const bs = BUCKETS[safeSeq] || [];
+  if (!bs.length) return;
+  idx = ((idx % bs.length) + bs.length) % bs.length;
+
+  const panel = document.getElementById('p_' + safeSeq);
+  if (!panel) return;
+  panel.dataset.idx = String(idx);
+
+  const bucket = bs[idx];
+  const lbl = panel.querySelector('.navLbl');
+  if (lbl) lbl.textContent = bucket + ' (' + (idx+1) + '/' + bs.length + ')';
+
+  const img = panel.querySelector('img');
+  if (img) {
+    const safeB = bucket.replaceAll(/[^A-Za-z0-9_]+/g,'_');
+    img.src = 'regret/seq_' + safeSeq + '_bucket_' + safeB + '.png';
+    img.alt = bucket;
+  }
+}
+
+function prevBucket() {
+  if (!CUR) return;
+  const panel = document.getElementById('p_' + CUR);
+  const idx = parseInt((panel && panel.dataset.idx) ? panel.dataset.idx : '0', 10);
+  setBucketIdx(CUR, idx - 1);
+}
+
+function nextBucket() {
+  if (!CUR) return;
+  const panel = document.getElementById('p_' + CUR);
+  const idx = parseInt((panel && panel.dataset.idx) ? panel.dataset.idx : '0', 10);
+  setBucketIdx(CUR, idx + 1);
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') prevBucket();
+  if (e.key === 'ArrowRight') nextBucket();
+});
+
+window.onload = function() {
+  if (SEQS.length) setSeq(SEQS[0][0]);
+};
+</script></body></html>

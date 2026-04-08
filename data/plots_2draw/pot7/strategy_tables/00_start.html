@@ -1,0 +1,235 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>2draw pot7 Start</title><style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 14px;
+}
+a { color: inherit; text-decoration: none; }
+.page-wrap {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.page-head {
+  padding: 10px 12px;
+  background: #0f3460;
+  border-bottom: 1px solid #0f3460;
+}
+.page-head h1 {
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #e94560;
+  margin: 0;
+}
+.page-sub {
+  padding: 8px 12px;
+  border-bottom: 1px solid #0f3460;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+}
+.page-sub .muted { color: #aaa; }
+.nav-row {
+  padding: 8px 12px;
+  border-bottom: 1px solid #0f3460;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.nav-btn {
+  background: #0d1b2a;
+  color: #e0e0e0;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.nav-btn:hover { border-color: #e94560; color: #fff; }
+.lp-section { padding: 8px 12px; border-bottom: 1px solid #0f3460; }
+.freq-title {
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.freq-bar-container {
+  display: flex;
+  width: 100%;
+  height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #444;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.freq-bar-segment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-right: 1px solid rgba(0,0,0,0.3);
+  min-width: 0;
+  gap: 2px;
+}
+.freq-bar-segment:last-child { border-right: none; }
+.freq-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(0, 0, 0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+.freq-pct {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(0, 0, 0);
+}
+.color-fold { background: #87CEEB; }
+.color-check { background: #74dd70; }
+.color-call { background: #74dd70; }
+.color-bet { background: #DC143C; }
+.color-raise { background: #DC143C; }
+.color-b40 { background: #FFB6C1; }
+.color-b80 { background: #FF6B6B; }
+.color-b120 { background: #DC143C; }
+.color-ba { background: #8B0000; }
+.color-r86 { background: #FF6B6B; }
+.color-r111 { background: #DC143C; }
+.color-ra { background: #8B0000; }
+
+.table-wrap {
+  padding: 8px 12px 12px 12px;
+  overflow-x: auto;
+}
+.strategy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  table-layout: fixed;
+}
+.strategy-table th {
+  background: #0f3460;
+  text-transform: uppercase;
+  font-size: 8px;
+  letter-spacing: 0.2px;
+  color: #aaa;
+  padding: 5px 3px;
+  border-bottom: 2px solid #e94560;
+  text-align: center;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.strategy-table td {
+  padding: 2px 3px;
+  border-bottom: 1px solid #0f3460;
+  vertical-align: middle;
+  height: 24px;
+  overflow: hidden;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.strategy-table tr:hover td { background: rgba(79, 195, 247, 0.05); }
+
+.strategy-table th.col-strategy,
+.strategy-table td.col-strategy { width: 52%; }
+.strategy-table th.col-rate,
+.strategy-table td.col-rate { width: 16%; }
+.strategy-table th.col-ev-btn,
+.strategy-table td.col-ev-btn { width: 16%; }
+.strategy-table th.col-ev-bb,
+.strategy-table td.col-ev-bb { width: 16%; }
+
+.bucket-strategy-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+}
+.bucket-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(15, 52, 96, 0.65);
+  border: 1px solid rgba(233, 69, 96, 0.25);
+  color: #4fc3f7;
+  font-weight: 800;
+  letter-spacing: 0.1px;
+  font-size: 10px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.strategy-bar {
+  display: flex;
+  height: 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.1);
+  width: 190px;
+  flex: 0 0 190px;
+}
+.bar-segment { height: 100%; }
+
+.ev-positive { color: #4caf50; font-weight: 800; }
+.ev-negative { color: #e94560; font-weight: 800; }
+.ev-zero { color: #888; }
+
+.seq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px;
+  padding: 12px;
+}
+.seq-card {
+  display: block;
+  background: #0d1b2a;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  padding: 10px;
+}
+.seq-card:hover { border-color: #e94560; }
+.seq-card .seq-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 4px;
+}
+.seq-card .seq-meta {
+  font-size: 10px;
+  color: #aaa;
+}
+.empty-note {
+  padding: 12px;
+  color: #aaa;
+  font-size: 11px;
+}
+@media (max-width: 900px) {
+  body { padding: 8px; }
+  .page-wrap { max-width: 100%; }
+  .strategy-bar { width: 160px; flex-basis: 160px; }
+}
+</style></head><body><div class="page-wrap"><div class="page-head"><h1>2DRAW Strategy Table — Pot 7</h1></div><div class="page-sub"><div><span class="muted">Sequence:</span> Start &nbsp; <span class="muted">Parsed:</span> Start</div><div><span class="muted">Actor:</span> BB</div></div><div class="nav-row"><a class="nav-btn" href="index.html">Prev</a><a class="nav-btn" href="index.html">All tables</a><a class="nav-btn" href="01_b.html">Next</a><a class="nav-btn" href="../index.html">Pot index</a></div><div class="lp-section"><div class="freq-title">Overall Frequency</div><div class="freq-bar-container"><div class="freq-bar-segment color-check" style="width:50.000000%;"><div class="freq-label">Check</div><div class="freq-pct">52.9%</div></div><div class="freq-bar-segment color-bet" style="width:50.000000%;"><div class="freq-label">Bet</div><div class="freq-pct">47.1%</div></div></div></div><div class="lp-section"><div class="freq-title">Actions</div><div class="muted" style="font-size:11px;">Check, Bet</div></div><div class="table-wrap"><table class="strategy-table"><thead><tr><th class="col-strategy">Strategy</th><th class="col-rate">Rate</th><th class="col-ev-btn">BTN EV</th><th class="col-ev-bb">BB EV</th></tr></thead><tbody><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">75</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:46.000000%;" title="Check: 46.0%"></div><div class="bar-segment color-bet" style="width:54.000000%;" title="Bet: 54.0%"></div></div></div></td><td class="col-rate">0.2%</td><td class="col-ev-btn ev-negative">-1.315</td><td class="col-ev-bb ev-positive">8.315</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">76</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:19.000000%;" title="Check: 19.0%"></div><div class="bar-segment color-bet" style="width:81.000000%;" title="Bet: 81.0%"></div></div></div></td><td class="col-rate">0.8%</td><td class="col-ev-btn ev-negative">-1.276</td><td class="col-ev-bb ev-positive">8.276</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">85</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:85.000000%;" title="Check: 85.0%"></div><div class="bar-segment color-bet" style="width:15.000000%;" title="Bet: 15.0%"></div></div></div></td><td class="col-rate">0.5%</td><td class="col-ev-btn ev-negative">-1.152</td><td class="col-ev-bb ev-positive">8.152</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">86</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:33.000000%;" title="Check: 33.0%"></div><div class="bar-segment color-bet" style="width:67.000000%;" title="Bet: 67.0%"></div></div></div></td><td class="col-rate">2.1%</td><td class="col-ev-btn ev-negative">-1.018</td><td class="col-ev-bb ev-positive">8.018</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">87</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:3.000000%;" title="Check: 3.0%"></div><div class="bar-segment color-bet" style="width:97.000000%;" title="Bet: 97.0%"></div></div></div></td><td class="col-rate">2.9%</td><td class="col-ev-btn ev-negative">-0.741</td><td class="col-ev-bb ev-positive">7.741</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">95</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:45.000000%;" title="Check: 45.0%"></div><div class="bar-segment color-bet" style="width:55.000000%;" title="Bet: 55.0%"></div></div></div></td><td class="col-rate">0.1%</td><td class="col-ev-btn ev-negative">-0.434</td><td class="col-ev-bb ev-positive">7.434</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">96</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:12.000000%;" title="Check: 12.0%"></div><div class="bar-segment color-bet" style="width:88.000000%;" title="Bet: 88.0%"></div></div></div></td><td class="col-rate">0.5%</td><td class="col-ev-btn ev-negative">-0.439</td><td class="col-ev-bb ev-positive">7.439</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">97</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:69.000000%;" title="Check: 69.0%"></div><div class="bar-segment color-bet" style="width:31.000000%;" title="Bet: 31.0%"></div></div></div></td><td class="col-rate">1.2%</td><td class="col-ev-btn ev-negative">-0.339</td><td class="col-ev-bb ev-positive">7.339</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">98</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:52.000000%;" title="Check: 52.0%"></div><div class="bar-segment color-bet" style="width:48.000000%;" title="Bet: 48.0%"></div></div></div></td><td class="col-rate">3.6%</td><td class="col-ev-btn ev-negative">-0.116</td><td class="col-ev-bb ev-positive">7.116</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T5</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:99.000000%;" title="Check: 99.0%"></div><div class="bar-segment color-bet" style="width:1.000000%;" title="Bet: 1.0%"></div></div></div></td><td class="col-rate">0.1%</td><td class="col-ev-btn ev-positive">0.241</td><td class="col-ev-bb ev-positive">6.759</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T6</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:99.000000%;" title="Check: 99.0%"></div><div class="bar-segment color-bet" style="width:1.000000%;" title="Bet: 1.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">0.316</td><td class="col-ev-bb ev-positive">6.684</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T7</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:29.000000%;" title="Check: 29.0%"></div><div class="bar-segment color-bet" style="width:71.000000%;" title="Bet: 71.0%"></div></div></div></td><td class="col-rate">1.2%</td><td class="col-ev-btn ev-positive">0.496</td><td class="col-ev-bb ev-positive">6.504</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T8</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:5.000000%;" title="Check: 5.0%"></div><div class="bar-segment color-bet" style="width:95.000000%;" title="Bet: 95.0%"></div></div></div></td><td class="col-rate">3.7%</td><td class="col-ev-btn ev-positive">0.725</td><td class="col-ev-bb ev-positive">6.275</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">T9</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:1.000000%;" title="Check: 1.0%"></div><div class="bar-segment color-bet" style="width:99.000000%;" title="Bet: 99.0%"></div></div></div></td><td class="col-rate">1.5%</td><td class="col-ev-btn ev-positive">0.625</td><td class="col-ev-bb ev-positive">6.375</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">J8</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:1.000000%;" title="Check: 1.0%"></div><div class="bar-segment color-bet" style="width:99.000000%;" title="Bet: 99.0%"></div></div></div></td><td class="col-rate">5.6%</td><td class="col-ev-btn ev-positive">1.146</td><td class="col-ev-bb ev-positive">5.854</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">J9</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:1.000000%;" title="Check: 1.0%"></div><div class="bar-segment color-bet" style="width:99.000000%;" title="Bet: 99.0%"></div></div></div></td><td class="col-rate">3.1%</td><td class="col-ev-btn ev-positive">1.528</td><td class="col-ev-bb ev-positive">5.472</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">Q</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:18.000000%;" title="Check: 18.0%"></div><div class="bar-segment color-bet" style="width:82.000000%;" title="Bet: 82.0%"></div></div></div></td><td class="col-rate">10.1%</td><td class="col-ev-btn ev-positive">2.370</td><td class="col-ev-bb ev-positive">4.630</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">K</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:36.000000%;" title="Check: 36.0%"></div><div class="bar-segment color-bet" style="width:64.000000%;" title="Bet: 64.0%"></div></div></div></td><td class="col-rate">11.8%</td><td class="col-ev-btn ev-positive">3.407</td><td class="col-ev-bb ev-positive">3.593</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">A</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:100.000000%;" title="Check: 100.0%"></div></div></div></td><td class="col-rate">13.4%</td><td class="col-ev-btn ev-positive">4.268</td><td class="col-ev-bb ev-positive">2.732</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">22</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:56.000000%;" title="Check: 56.0%"></div><div class="bar-segment color-bet" style="width:44.000000%;" title="Bet: 44.0%"></div></div></div></td><td class="col-rate">3.3%</td><td class="col-ev-btn ev-positive">6.044</td><td class="col-ev-bb ev-positive">0.956</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">33</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:71.000000%;" title="Check: 71.0%"></div><div class="bar-segment color-bet" style="width:29.000000%;" title="Bet: 29.0%"></div></div></div></td><td class="col-rate">4.8%</td><td class="col-ev-btn ev-positive">6.030</td><td class="col-ev-bb ev-positive">0.970</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">44</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:65.000000%;" title="Check: 65.0%"></div><div class="bar-segment color-bet" style="width:35.000000%;" title="Bet: 35.0%"></div></div></div></td><td class="col-rate">3.9%</td><td class="col-ev-btn ev-positive">6.020</td><td class="col-ev-bb ev-positive">0.980</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">55</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:79.000000%;" title="Check: 79.0%"></div><div class="bar-segment color-bet" style="width:21.000000%;" title="Bet: 21.0%"></div></div></div></td><td class="col-rate">4.8%</td><td class="col-ev-btn ev-positive">6.009</td><td class="col-ev-bb ev-positive">0.991</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">66</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:86.000000%;" title="Check: 86.0%"></div><div class="bar-segment color-bet" style="width:14.000000%;" title="Bet: 14.0%"></div></div></div></td><td class="col-rate">5.0%</td><td class="col-ev-btn ev-positive">6.111</td><td class="col-ev-bb ev-positive">0.889</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">77</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:86.000000%;" title="Check: 86.0%"></div><div class="bar-segment color-bet" style="width:14.000000%;" title="Bet: 14.0%"></div></div></div></td><td class="col-rate">2.6%</td><td class="col-ev-btn ev-positive">5.908</td><td class="col-ev-bb ev-positive">1.092</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">88</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:92.000000%;" title="Check: 92.0%"></div><div class="bar-segment color-bet" style="width:8.000000%;" title="Bet: 8.0%"></div></div></div></td><td class="col-rate">5.6%</td><td class="col-ev-btn ev-positive">6.302</td><td class="col-ev-bb ev-positive">0.698</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">99</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:99.000000%;" title="Check: 99.0%"></div><div class="bar-segment color-bet" style="width:1.000000%;" title="Bet: 1.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">5.879</td><td class="col-ev-bb ev-positive">1.121</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">TT</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:12.000000%;" title="Check: 12.0%"></div><div class="bar-segment color-bet" style="width:88.000000%;" title="Bet: 88.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">6.114</td><td class="col-ev-bb ev-positive">0.886</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">JJ</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:3.000000%;" title="Check: 3.0%"></div><div class="bar-segment color-bet" style="width:97.000000%;" title="Bet: 97.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">6.476</td><td class="col-ev-bb ev-positive">0.524</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">QQ</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:2.000000%;" title="Check: 2.0%"></div><div class="bar-segment color-bet" style="width:98.000000%;" title="Bet: 98.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">6.591</td><td class="col-ev-bb ev-positive">0.409</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">KK</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:14.000000%;" title="Check: 14.0%"></div><div class="bar-segment color-bet" style="width:86.000000%;" title="Bet: 86.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">6.838</td><td class="col-ev-bb ev-positive">0.162</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">AA</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:72.000000%;" title="Check: 72.0%"></div><div class="bar-segment color-bet" style="width:28.000000%;" title="Bet: 28.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">7.008</td><td class="col-ev-bb ev-negative">-0.008</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">2-Pair</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:99.000000%;" title="Check: 99.0%"></div><div class="bar-segment color-bet" style="width:1.000000%;" title="Bet: 1.0%"></div></div></div></td><td class="col-rate">1.9%</td><td class="col-ev-btn ev-positive">6.999</td><td class="col-ev-bb ev-positive">0.001</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">Str.</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:97.000000%;" title="Check: 97.0%"></div><div class="bar-segment color-bet" style="width:3.000000%;" title="Bet: 3.0%"></div></div></div></td><td class="col-rate">1.1%</td><td class="col-ev-btn ev-positive">6.998</td><td class="col-ev-bb ev-positive">0.002</td></tr><tr><td class="col-strategy"><div class="bucket-strategy-cell"><span class="bucket-tag">Trips</span><div class="strategy-bar"><div class="bar-segment color-check" style="width:92.000000%;" title="Check: 92.0%"></div><div class="bar-segment color-bet" style="width:8.000000%;" title="Bet: 8.0%"></div></div></div></td><td class="col-rate">0.6%</td><td class="col-ev-btn ev-positive">6.996</td><td class="col-ev-bb ev-positive">0.004</td></tr></tbody></table></div></div></body></html>

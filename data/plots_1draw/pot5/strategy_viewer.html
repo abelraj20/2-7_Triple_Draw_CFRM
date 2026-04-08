@@ -1,0 +1,204 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>strategy 1draw pot5</title><style>
+body{font-family:system-ui,sans-serif;margin:20px;background:#f5f5f5}
+h2{text-align:center;color:#222;margin:0 0 14px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tab{padding:8px 14px;cursor:pointer;border:1px solid #ccc;border-radius:10px;background:#eee;font-size:13px;user-select:none}
+.tab.on{background:#fff;font-weight:700;border-color:#bbb;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.panel{display:none;background:#fff;border:1px solid #ddd;border-radius:14px;padding:14px}
+.panel.on{display:block}
+.nav{display:flex;justify-content:center;align-items:center;gap:10px;margin:6px 0 10px}
+.navBtn{cursor:pointer;padding:6px 12px;background:#fff;border:1px solid #ccc;border-radius:10px;font-size:16px;user-select:none}
+.navBtn:hover{background:#eee}
+.navLbl{font-size:13px;color:#333;min-width:220px;text-align:center}
+.imgWrap{text-align:center}
+.imgWrap img{max-width:100%;border-radius:10px;border:1px solid #eee}
+.note{font-size:12px;color:#666;margin-top:8px;text-align:center}
+</style></head><body><h2>1DRAW Strategy — Pot 5</h2>
+<div class="tabs">
+<div id="t_start" class="tab" onclick="setSeq('start')">Start</div>
+<div id="t_b" class="tab" onclick="setSeq('b')">b</div>
+<div id="t_br" class="tab" onclick="setSeq('br')">br</div>
+<div id="t_brr" class="tab" onclick="setSeq('brr')">brr</div>
+<div id="t_brrr" class="tab" onclick="setSeq('brrr')">brrr</div>
+<div id="t_k" class="tab" onclick="setSeq('k')">k</div>
+<div id="t_kb" class="tab" onclick="setSeq('kb')">kb</div>
+<div id="t_kbr" class="tab" onclick="setSeq('kbr')">kbr</div>
+<div id="t_kbrr" class="tab" onclick="setSeq('kbrr')">kbrr</div>
+<div id="t_kbrrr" class="tab" onclick="setSeq('kbrrr')">kbrrr</div>
+</div>
+<div id="p_start" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_start_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: Start (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_b" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_b_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: b (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_br" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_br_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: br (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_brr" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_brr_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: brr (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_brrr" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_brrr_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: brrr (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_k" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_k_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: k (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kb" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_kb_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kb (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kbr" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_kbr_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kbr (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kbrr" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_kbrr_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kbrr (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<div id="p_kbrrr" class="panel" data-idx="0">
+  <div class="nav">
+    <div class="navBtn" onclick="prevBucket()">&#8592;</div>
+    <div class="navLbl">75 (1/28)</div>
+    <div class="navBtn" onclick="nextBucket()">&#8594;</div>
+  </div>
+  <div class="imgWrap">
+    <img src="strategy/seq_kbrrr_bucket_75.png" loading="lazy"/>
+    <div class="note">Sequence: kbrrr (use &#8592; / &#8594; keys too)</div>
+  </div>
+</div>
+<script>
+const SEQS = [["start", ""], ["b", "b"], ["br", "br"], ["brr", "brr"], ["brrr", "brrr"], ["k", "k"], ["kb", "kb"], ["kbr", "kbr"], ["kbrr", "kbrr"], ["kbrrr", "kbrrr"]];
+const BUCKETS = {"start": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "b": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "br": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "brr": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "brrr": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "k": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "kb": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "kbr": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "kbrr": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"], "kbrrr": ["75", "76", "85", "86", "87", "95", "96", "97", "98", "T5", "T6", "T7", "T8", "T9", "J8", "J9", "Q", "K", "A", "22", "33", "44", "55", "66", "77", "88", "99", "Straight"]};
+let CUR = SEQS.length ? SEQS[0][0] : null;
+
+function setSeq(safeSeq) {
+  CUR = safeSeq;
+  for (const [sid,_] of SEQS) {
+    const t = document.getElementById('t_' + sid);
+    const p = document.getElementById('p_' + sid);
+    if (t) t.classList.remove('on');
+    if (p) p.classList.remove('on');
+  }
+  const t = document.getElementById('t_' + safeSeq);
+  const p = document.getElementById('p_' + safeSeq);
+  if (t) t.classList.add('on');
+  if (p) p.classList.add('on');
+
+  const bs = BUCKETS[safeSeq] || [];
+  if (bs.length) setBucketIdx(safeSeq, 0);
+}
+
+function setBucketIdx(safeSeq, idx) {
+  const bs = BUCKETS[safeSeq] || [];
+  if (!bs.length) return;
+  idx = ((idx % bs.length) + bs.length) % bs.length;
+
+  const panel = document.getElementById('p_' + safeSeq);
+  if (!panel) return;
+  panel.dataset.idx = String(idx);
+
+  const bucket = bs[idx];
+  const lbl = panel.querySelector('.navLbl');
+  if (lbl) lbl.textContent = bucket + ' (' + (idx+1) + '/' + bs.length + ')';
+
+  const img = panel.querySelector('img');
+  if (img) {
+    const safeB = bucket.replaceAll(/[^A-Za-z0-9_]+/g,'_');
+    img.src = 'strategy/seq_' + safeSeq + '_bucket_' + safeB + '.png';
+    img.alt = bucket;
+  }
+}
+
+function prevBucket() {
+  if (!CUR) return;
+  const panel = document.getElementById('p_' + CUR);
+  const idx = parseInt((panel && panel.dataset.idx) ? panel.dataset.idx : '0', 10);
+  setBucketIdx(CUR, idx - 1);
+}
+
+function nextBucket() {
+  if (!CUR) return;
+  const panel = document.getElementById('p_' + CUR);
+  const idx = parseInt((panel && panel.dataset.idx) ? panel.dataset.idx : '0', 10);
+  setBucketIdx(CUR, idx + 1);
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') prevBucket();
+  if (e.key === 'ArrowRight') nextBucket();
+});
+
+window.onload = function() {
+  if (SEQS.length) setSeq(SEQS[0][0]);
+};
+</script></body></html>

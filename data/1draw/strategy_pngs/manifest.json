@@ -1,0 +1,38 @@
+{
+  "3": {
+    "": "strategy_pngs\\pot_3\\start.png",
+    "k": "strategy_pngs\\pot_3\\k.png",
+    "b": "strategy_pngs\\pot_3\\b.png",
+    "kb": "strategy_pngs\\pot_3\\kb.png",
+    "kbr": "strategy_pngs\\pot_3\\kbr.png",
+    "br": "strategy_pngs\\pot_3\\br.png",
+    "brr": "strategy_pngs\\pot_3\\brr.png",
+    "brrr": "strategy_pngs\\pot_3\\brrr.png",
+    "kbrr": "strategy_pngs\\pot_3\\kbrr.png",
+    "kbrrr": "strategy_pngs\\pot_3\\kbrrr.png"
+  },
+  "5": {
+    "": "strategy_pngs\\pot_5\\start.png",
+    "k": "strategy_pngs\\pot_5\\k.png",
+    "b": "strategy_pngs\\pot_5\\b.png",
+    "kb": "strategy_pngs\\pot_5\\kb.png",
+    "kbr": "strategy_pngs\\pot_5\\kbr.png",
+    "br": "strategy_pngs\\pot_5\\br.png",
+    "brr": "strategy_pngs\\pot_5\\brr.png",
+    "brrr": "strategy_pngs\\pot_5\\brrr.png",
+    "kbrr": "strategy_pngs\\pot_5\\kbrr.png",
+    "kbrrr": "strategy_pngs\\pot_5\\kbrrr.png"
+  },
+  "7": {
+    "": "strategy_pngs\\pot_7\\start.png",
+    "k": "strategy_pngs\\pot_7\\k.png",
+    "b": "strategy_pngs\\pot_7\\b.png",
+    "kb": "strategy_pngs\\pot_7\\kb.png",
+    "kbr": "strategy_pngs\\pot_7\\kbr.png",
+    "br": "strategy_pngs\\pot_7\\br.png",
+    "brr": "strategy_pngs\\pot_7\\brr.png",
+    "brrr": "strategy_pngs\\pot_7\\brrr.png",
+    "kbrr": "strategy_pngs\\pot_7\\kbrr.png",
+    "kbrrr": "strategy_pngs\\pot_7\\kbrrr.png"
+  }
+}

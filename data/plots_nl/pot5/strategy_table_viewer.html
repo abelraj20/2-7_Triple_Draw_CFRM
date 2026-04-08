@@ -1,0 +1,235 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>nl pot5 strategy tables</title><meta http-equiv="refresh" content="0; url=strategy_tables/index.html"><style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 14px;
+}
+a { color: inherit; text-decoration: none; }
+.page-wrap {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.page-head {
+  padding: 10px 12px;
+  background: #0f3460;
+  border-bottom: 1px solid #0f3460;
+}
+.page-head h1 {
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #e94560;
+  margin: 0;
+}
+.page-sub {
+  padding: 8px 12px;
+  border-bottom: 1px solid #0f3460;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+}
+.page-sub .muted { color: #aaa; }
+.nav-row {
+  padding: 8px 12px;
+  border-bottom: 1px solid #0f3460;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.nav-btn {
+  background: #0d1b2a;
+  color: #e0e0e0;
+  border: 1px solid #0f3460;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.nav-btn:hover { border-color: #e94560; color: #fff; }
+.lp-section { padding: 8px 12px; border-bottom: 1px solid #0f3460; }
+.freq-title {
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.freq-bar-container {
+  display: flex;
+  width: 100%;
+  height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #444;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.freq-bar-segment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-right: 1px solid rgba(0,0,0,0.3);
+  min-width: 0;
+  gap: 2px;
+}
+.freq-bar-segment:last-child { border-right: none; }
+.freq-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(0, 0, 0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+.freq-pct {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 1px 0 rgb(0, 0, 0);
+}
+.color-fold { background: #87CEEB; }
+.color-check { background: #74dd70; }
+.color-call { background: #74dd70; }
+.color-bet { background: #DC143C; }
+.color-raise { background: #DC143C; }
+.color-b40 { background: #FFB6C1; }
+.color-b80 { background: #FF6B6B; }
+.color-b120 { background: #DC143C; }
+.color-ba { background: #8B0000; }
+.color-r86 { background: #FF6B6B; }
+.color-r111 { background: #DC143C; }
+.color-ra { background: #8B0000; }
+
+.table-wrap {
+  padding: 8px 12px 12px 12px;
+  overflow-x: auto;
+}
+.strategy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  table-layout: fixed;
+}
+.strategy-table th {
+  background: #0f3460;
+  text-transform: uppercase;
+  font-size: 8px;
+  letter-spacing: 0.2px;
+  color: #aaa;
+  padding: 5px 3px;
+  border-bottom: 2px solid #e94560;
+  text-align: center;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.strategy-table td {
+  padding: 2px 3px;
+  border-bottom: 1px solid #0f3460;
+  vertical-align: middle;
+  height: 24px;
+  overflow: hidden;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.strategy-table tr:hover td { background: rgba(79, 195, 247, 0.05); }
+
+.strategy-table th.col-strategy,
+.strategy-table td.col-strategy { width: 52%; }
+.strategy-table th.col-rate,
+.strategy-table td.col-rate { width: 16%; }
+.strategy-table th.col-ev-btn,
+.strategy-table td.col-ev-btn { width: 16%; }
+.strategy-table th.col-ev-bb,
+.strategy-table td.col-ev-bb { width: 16%; }
+
+.bucket-strategy-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+}
+.bucket-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(15, 52, 96, 0.65);
+  border: 1px solid rgba(233, 69, 96, 0.25);
+  color: #4fc3f7;
+  font-weight: 800;
+  letter-spacing: 0.1px;
+  font-size: 10px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.strategy-bar {
+  display: flex;
+  height: 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.1);
+  width: 190px;
+  flex: 0 0 190px;
+}
+.bar-segment { height: 100%; }
+
+.ev-positive { color: #4caf50; font-weight: 800; }
+.ev-negative { color: #e94560; font-weight: 800; }
+.ev-zero { color: #888; }
+
+.seq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px;
+  padding: 12px;
+}
+.seq-card {
+  display: block;
+  background: #0d1b2a;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  padding: 10px;
+}
+.seq-card:hover { border-color: #e94560; }
+.seq-card .seq-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 4px;
+}
+.seq-card .seq-meta {
+  font-size: 10px;
+  color: #aaa;
+}
+.empty-note {
+  padding: 12px;
+  color: #aaa;
+  font-size: 11px;
+}
+@media (max-width: 900px) {
+  body { padding: 8px; }
+  .page-wrap { max-width: 100%; }
+  .strategy-bar { width: 160px; flex-basis: 160px; }
+}
+</style></head><body><div class="page-wrap"><div class="page-head"><h1>NL Strategy Tables — Pot 5</h1></div><div class="empty-note">Open <a href="strategy_tables/index.html">strategy_tables/index.html</a>.</div></div></body></html>
