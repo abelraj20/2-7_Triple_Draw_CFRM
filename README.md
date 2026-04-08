@@ -1,4 +1,4 @@
-# 2-7 Triple Draw CFR+ Poker Solver
+# Final Round 2-7 Triple Draw CFR+ Poker Solver
 
 ## Instructions
 
