@@ -85,32 +85,7 @@ python3 solver/cfr_1draw.py --iterations 50000 --pots 3,5,7 --out-prefix 1draw
 python3 solver/cfr_2draw.py
 ```
 
-Common arguments:
-
-- `--seed`  
-  Random seed.  
-  Default: `42`
-
-- `--iters`  
-  Number of CFR+ iterations.  
-  Default: `50000`
-
-- `--br-policy-iters`  
-  Best-response policy iterations.  
-  Default: `16`
-
-- `--exp-print-step`  
-  Exploitability print / tracking interval.  
-  Default: `100`
-
-- `--ev-samples`  
-  EV samples per bucket.  
-  Default: `800`
-
-- `--time-export`  
-  Print export timing.
-
-The script also accepts compatibility flags `--exploit-step`, `--tracking-step`, and `--exploit-samples`, but they are ignored in the current version.
+Arguments similar to 1-draw model.
 
 Example:
 
@@ -124,27 +99,7 @@ python3 solver/cfr_2draw.py --iters 50000
 python3 solver/cfr_nl.py
 ```
 
-Common arguments:
-
-- `--seed`  
-  Random seed.  
-  Default: `42`
-
-- `--iters`  
-  Number of CFR+ iterations.  
-  Default: `250000`
-
-- `--br-policy-iters`  
-  Best-response policy iterations.  
-  Default: `16`
-
-- `--exp-print-step`  
-  Exploitability print / tracking interval.  
-  Default: `200`
-
-- `--ev-samples`  
-  EV samples per bucket.  
-  Default: `800`
+Unique Arguments:
 
 - `--stack`  
   Final-round stack size.  
@@ -166,82 +121,16 @@ python3 solver/cfr_nl.py --iters 250000 --stack 25 --start-pot 5
 python3 solver/cfr_rem.py
 ```
 
-Common arguments:
-
-- `--seed`  
-  Random seed.  
-  Default: `42`
-
-- `--iters` or `--iterations`  
-  Number of CFR+ iterations.  
-  Default: `50000`
-
-- `--pots`  
-  Comma-separated pot sizes to run.  
-  Default: the script's configured pot list
-
-- `--out-prefix`  
-  Output folder name prefix inside `data/`.  
-  Default: `cfr_rem`
+Unique arguments:
 
 - `--discarded-twos`  
   Comma-separated discarded-deuce cases to run.  
   Default: `0`
 
-- `--br-policy-iters`  
-  Best-response policy iterations.  
-  Default: `16`
-
-- `--exp-print-step`  
-  Exploitability print / tracking interval.  
-  Default: `100`
-
-- `--ev-samples`  
-  EV samples per bucket.  
-  Default: `800`
-
-- `--avg-delay`  
-  CFR+ averaging delay.  
-  Default: `250`
-
-- `--sim-init-freq-n`  
-  Monte Carlo simulations used for root bucket frequencies.  
-  Default: `200000`
-
-- `--time-export`  
-  Print export timing.
-
-- `--time-total`  
-  Print total script runtime.
-
-- `--stop-expl-mbb`  
-  Stop early once exploitability reaches the target.
-
-- `--dense-expl-below-mbb`  
-  Recompute exploitability every iteration once below the given threshold.
-
 Example:
 
 ```bash
 python3 solver/cfr_rem.py --discarded-twos 0,1,2,3 --out-prefix cfr_rem
-```
-
-### Optional Wrapper Examples
-
-If your local setup includes a helper wrapper such as `run_solvers`, typical usage would look like:
-
-```bash
-# Run with custom iterations
-./run_solvers --iterations 500000
-
-# Run specific modes only
-./run_solvers --modes 1draw,nl
-
-# Quick test mode (fewer iterations)
-./run_solvers --quick
-
-# Regenerate plots only (skip solver runs)
-./run_solvers --plots-only
 ```
 
 ### Building Frontend Data
@@ -289,7 +178,7 @@ Useful `build_solver_data.py` arguments:
   Default: `600`
 
 - `--variant`  
-  Restrict export to one or more variants. Repeat the flag to include multiple variants.
+  Restrict export to one or more variants. Repeat argument to include multiple variants.
 
 Example:
 
@@ -308,7 +197,7 @@ python3 solver/plot_utils.py --variant all
 Optional arguments:
 
 - `--variant`  
-  One of `1draw`, `1draw_bb`, `2draw`, `nl`, or `all`  
+  One of `1draw`, `2draw`, `nl`, or `all`  
   Default: `all`
 
 - `--pot`  
@@ -405,7 +294,7 @@ Depending on the solver and export step, the variant folder may also contain:
 - `strategy_pngs/`
 - `manifest.json` for exported strategy PNGs
 
-### Accessing Strategy, Regret, and Exploitability Output
+### Accessing Strategy, Regret, and Exploitability Outputs
 
 After running `plot_utils.py`, the generated plots and viewers are stored under:
 
@@ -448,10 +337,8 @@ Inside each `data/plots_<variant>/pot<pot>/` folder, you can access:
 - **2-draw default iterations**: `50000`
 - **Card-removal default iterations**: `50000`
 - **No-limit default iterations**: `250000`
-- **1-draw / 2-draw / card-removal EV samples per bucket**: `800`
-- **No-limit EV samples per bucket**: `800`
-- **1-draw / 2-draw / card-removal best-response policy iterations**: `16`
-- **No-limit best-response policy iterations**: `16`
+- **1-draw / 2-draw / card-removal / No-limit EV samples per bucket**: `800`
+- **1-draw / 2-draw / card-removal / No-limit best-response policy iterations**: `16`
 
 ## Directory Structure
 
