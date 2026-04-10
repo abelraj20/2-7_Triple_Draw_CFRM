@@ -343,7 +343,7 @@ Inside each `data/plots_<variant>/pot<pot>/` folder, you can access:
 ## Directory Structure
 
 ```text
-triple_plus/
+parent_folder/
 ├── data/                          # Solver outputs and generated plot folders
 │   ├── 1draw/
 │   ├── 2draw/
